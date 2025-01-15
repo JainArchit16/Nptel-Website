@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  userId     Int       @id @default(autoincrement())
+  name       String
+  email      String    @unique
+  passwordHash String
+  createdAt  DateTime  @default(now())
+  quizzes    Quiz[]
+  bookmarkedQuestions BookmarkedQuestion[]
+  notes      Note[]
+}
+
+model Question {
+  questionId  Int       @id @default(autoincrement())
+  week        Int
+  questionText String
+  optionA     String
+  optionB     String
+  optionC     String
+  optionD     String
+  correctOption String
+  createdAt   DateTime  @default(now())
+  userAnswers UserAnswer[]
+  bookmarkedQuestions BookmarkedQuestion[]
+  notes       Note[]
+}
+
+model Quiz {
+  quizId     Int       @id @default(autoincrement())
+  userId     Int
+  week       Int
+  score      Float
+  accuracy   Float?
+  timeTaken  Int?      // Stored in seconds
+  completedAt DateTime @default(now())
+  user       User      @relation(fields: [userId], references: [userId])
+  userAnswers UserAnswer[]
+}
+
+model UserAnswer {
+  answerId   Int       @id @default(autoincrement())
+  quizId     Int
+  questionId Int
+  selectedOption String
+  isCorrect  Boolean
+  quiz       Quiz      @relation(fields: [quizId], references: [quizId])
+  question   Question  @relation(fields: [questionId], references: [questionId])
+}
+
+model BookmarkedQuestion {
+  bookmarkId  Int       @id @default(autoincrement())
+  userId      Int
+  questionId  Int
+  bookmarkedAt DateTime @default(now())
+  user        User      @relation(fields: [userId], references: [userId])
+  question    Question  @relation(fields: [questionId], references: [questionId])
+}
+
+model Note {
+  noteId      Int       @id @default(autoincrement())
+  userId      Int
+  questionId  Int
+  noteText    String
+  createdAt   DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [userId])
+  question    Question  @relation(fields: [questionId], references: [questionId])
+}
+
+model Resource {
+  resourceId Int    @id @default(autoincrement())
+  week       Int
+  pptLink    String?
+  videoLink  String?
+}
