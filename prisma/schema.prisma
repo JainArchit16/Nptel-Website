@@ -52,7 +52,15 @@ model Quiz {
   userAnswers UserAnswer[]
 }
 
-
+model UserAnswer {
+  answerId   Int       @id @default(autoincrement())
+  quizId     Int
+  questionId Int
+  selectedOption String
+  isCorrect  Boolean
+  quiz       Quiz      @relation(fields: [quizId], references: [quizId])
+  question   Question  @relation(fields: [questionId], references: [questionId])
+}
 
 model BookmarkedQuestion {
   bookmarkId  Int       @id @default(autoincrement())
