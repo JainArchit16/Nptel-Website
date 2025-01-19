@@ -32,7 +32,7 @@ const Navbar = () => {
         className={`flex flex-wrap justify-between items-center w-[98%] py-4 mx-auto`}
       >
         <Link href="/" className="flex items-center w-[20%] h-[80%]">
-          <img src={123} alt="logo" className="h-[50px] w-[40px] mr-4" />
+          <img src="/next.svg" alt="logo" className="h-[50px] w-[40px] mr-4" />
           {/* <span className="role"></span> */}
         </Link>
 
