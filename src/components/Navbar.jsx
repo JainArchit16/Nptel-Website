@@ -8,7 +8,7 @@ import ProfileDropDown from "../components/ProfileDropdown";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import image1 from "../../assests/mainLogo.jpeg";
 const Navbar = () => {
   let [open, setOpen] = useState(false);
   const router = useRouter();
@@ -24,26 +24,25 @@ const Navbar = () => {
     setMenuOpen(!menuOpen);
   };
 
-  let loggedIn = true;
+  let loggedIn = false;
 
   return (
     <header className="w-full shadow-md">
       <nav
-        className={`flex flex-wrap justify-between items-center w-[98%] py-4 mx-auto`}
+        className={`flex flex-wrap justify-between items-center w-[98%] py-1 mx-auto`}
       >
         <Link href="/" className="flex items-center w-[20%] h-[80%]">
-          <img src="/next.svg" alt="logo" className="h-[50px] w-[40px] mr-4" />
-          {/* <span className="role"></span> */}
+          <img src={image1} alt="logo" className="h-[50px] w-[40px] mr-4" />
         </Link>
 
-        <div className="hidden md:block w-auto">
+        <div className="hidden md:block w-[50%]">
           <ul className="text-xl flex font-medium p-0  space-x-8 flex-row mt-0 border-0 bg-white ">
             {paths.map((path, index) => (
               <li key={index}>
                 <Link
                   href={path[0]}
                   className={`block py-2 mb-2 px-3 text-gray-800  hover:text-white hover:bg-red-600 hover:rounded-2xl  transition-all duration-[300ms] ease-in ${
-                    location.pathname === path[0]
+                    router.pathname === path[0]
                       ? "bg-red-600   text-white rounded-2xl transition-all duration-[300ms] ease-in"
                       : ""
                   }`}
