@@ -1,17 +1,25 @@
-"use client";
-
+/* eslint-disable react-hooks/rules-of-hooks */
+import { Link, useLocation } from "react-router-dom";
+import image1 from "./assets/images/logo/logo.png";
+import { UserContext } from "./models/UserContext";
 import { TiThMenu } from "react-icons/ti";
 import { FaWindowClose } from "react-icons/fa";
+import { auth } from "./config/firebase";
 import { IoMdLogIn } from "react-icons/io";
 import { SiGnuprivacyguard } from "react-icons/si";
-import ProfileDropDown from "../components/ProfileDropdown";
-import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-// import image1 from "../../public/assests/mainLogo.jpg";
+import Typed from "typed.js";
+import ProfileDropDown from "./components/DashBoard/ProfileDropdown";
+import { useContext, useEffect, useState } from "react";
+import { TeacherContext } from "./models/TeacherContext";
+
+//darsh isko set krde ismein first name and last name wala part edit krna h
 const Navbar = () => {
+  const location = useLocation();
+  if (location.pathname === "/") return null;
+  const { loggedIn } = useContext(UserContext);
+  const { loggedInTeacher } = useContext(TeacherContext);
   let [open, setOpen] = useState(false);
-  const router = useRouter();
+  const user = auth.currentUser;
   const paths = [
     ["/home", "Home"],
     ["/gallery", "Gallery"],
@@ -19,34 +27,46 @@ const Navbar = () => {
     ["/notice", "Notices"],
   ];
 
+  useEffect(() => {
+    const typeData = new Typed(".role", {
+      strings: [
+        "Unity and Discipline",
+        "Together we are Stronger",
+        "Once a Cadet Always a Cadet",
+      ],
+      loop: true,
+      typeSpeed: 100,
+      backSpeed: 75,
+      backDelay: 1500,
+    });
+
+    return () => {
+      typeData.destroy();
+    };
+  }, []);
+
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-
-  let loggedIn = false;
-
   return (
     <header className="w-full shadow-md">
       <nav
-        className={`flex flex-wrap justify-between items-center w-[98%] py-1 mx-auto`}
+        className={`flex flex-wrap justify-between items-center w-[98%] py-4 mx-auto`}
       >
-        <Link href="/" className="flex items-center w-[20%] h-[80%]">
-          <img
-            src="/assests/mainLogo.jpg"
-            alt="logo"
-            className="h-[45px] w-[45px] mr-4 rounded-full"
-          />
+        <Link to="/" className="flex items-center w-[20%] h-[80%]">
+          <img src={image1} alt="ncc logo" className="h-[50px] w-[40px] mr-4" />
+          <span className="role"></span>
         </Link>
 
-        <div className="hidden md:block w-[50%]">
+        <div className="hidden md:block w-auto">
           <ul className="text-xl flex font-medium p-0  space-x-8 flex-row mt-0 border-0 bg-white ">
             {paths.map((path, index) => (
               <li key={index}>
                 <Link
-                  href={path[0]}
+                  to={path[0]}
                   className={`block py-2 mb-2 px-3 text-gray-800  hover:text-white hover:bg-red-600 hover:rounded-2xl  transition-all duration-[300ms] ease-in ${
-                    router.pathname === path[0]
+                    location.pathname === path[0]
                       ? "bg-red-600   text-white rounded-2xl transition-all duration-[300ms] ease-in"
                       : ""
                   }`}
@@ -59,33 +79,16 @@ const Navbar = () => {
         </div>
 
         <div className="flex md:flex-row md:pb-0 md:w-auto md:items-center md:justify-center gap-3 transition-all duration-500 ease-in list-none">
-          {loggedIn ? (
+          {loggedIn || loggedInTeacher ? (
             <>
               <div className="flex flex-row gap-6 items-center">
                 <ProfileDropDown />
               </div>
-              {/* <div className="lg:hidden">
-                <button
-                  onClick={toggleMenu}
-                  className="text-white focus:outline-none"
-                >
-                  {menuOpen ? "Close" : "Menu"}
-                </button>
-              </div> */}
             </>
           ) : (
             <>
-              {/* <li>
-                <Link
-                  to="/signup"
-                  className=" text-xl duration-500 bg-red-600 p-2 rounded-2xl  text-gray-100 flex flex-row gap-2 justify-center items-center hover:scale-110 hover:text-gray-100"
-                >
-                  <SiGnuprivacyguard />
-                  Sign Up
-                </Link>
-              </li> */}
               <li>
-                <Link href="/signup" className="btn-7 p-2 rounded-lg">
+                <Link to="/signup" className="btn-7 p-2 rounded-lg">
                   <span className="flex flex-row justify-center items-center gap-1 text-sm md:text-lg">
                     <p className="z-[100] flex flex-row justify-center items-center gap-1">
                       <SiGnuprivacyguard />
@@ -95,7 +98,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/login" className="btn-7 p-2 rounded-lg">
+                <Link to="/login" className="btn-7 p-2 rounded-lg">
                   <span className="flex flex-row justify-center items-center gap-1 text-sm md:text-lg">
                     <p className="z-[100] flex flex-row justify-center items-center gap-1">
                       <IoMdLogIn />
@@ -104,31 +107,8 @@ const Navbar = () => {
                   </span>
                 </Link>
               </li>
-              {/* <div>
-                <a class="btn-7" href="#">
-                  <span>Alternate</span>
-                </a>
-              </div> */}
             </>
           )}
-          {/* (
-            <li>
-              <Link
-                to="/dashboard"
-                className="md:ml-8 text-xl  text-gray-800 hover:text-white duration-500 flex items-center"
-              >
-                <img
-                  src={
-                    user.photoURL
-                      ? user.photoURL
-                      : "https://api.dicebear.com/7.x/initials/svg?seed=${firstName}%20${lastName}"
-                  }
-                  alt="image"
-                  className="h-10 w-10 rounded-full border-2 border-gray-300 object-cover cursor-pointer"
-                />
-              </Link>
-            </li>
-          ) */}
 
           <div
             onClick={() => setOpen(!open)}
@@ -145,9 +125,9 @@ const Navbar = () => {
           {paths.map((path, index) => (
             <li key={index}>
               <Link
-                href={path[0]}
+                to={path[0]}
                 className={`block py-2 mb-2 px-3  hover:text-black  rounded hover:bg-gray-100 transition-all duration-[300ms] ease-in ${
-                  router.pathname === path[0]
+                  location.pathname === path[0]
                     ? " bg-gray-100 text-black transition-all duration-[300ms] ease-in"
                     : "text-white"
                 }`}
