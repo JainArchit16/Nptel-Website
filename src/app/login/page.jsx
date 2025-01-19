@@ -1,9 +1,12 @@
-'use client';
-import { FormEvent } from 'react';
-import { useRouter } from 'next/navigation'; 
+'use client';  // Mark this component as a client component
+
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import styles from './login.module.css';  // Import the CSS module
 
 export default function LoginPage() {
   const router = useRouter();
+  const [error, setError] = useState(null);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -19,17 +22,24 @@ export default function LoginPage() {
     });
 
     if (response.ok) {
-      router.push('/profile'); 
+      const result = await response.json();
+      localStorage.setItem('token', result.token); // Store JWT token
+      router.push('/dashboard');
     } else {
-      // Handle errors
+      const result = await response.json();
+      setError(result.error || 'Login failed. Please try again.');
     }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
+    <div className={styles.container}>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <h2>Log In</h2>
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <button type="submit">Log In</button>
+        {error && <p className={styles.error}>{error}</p>}
+      </form>
+    </div>
   );
 }
