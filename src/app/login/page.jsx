@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import styles from "./login.module.css"; // Import the CSS module
+// import styles from "./login.module.css"; // Import the CSS module
 import { useForm } from "react-hook-form";
 
 import toast from "react-hot-toast";
@@ -55,20 +55,20 @@ export default function LoginPage() {
     <div className="h-full w-full flex flex-col justify-center items-center bg-slate-100">
       <div className="w-[80%] md:h-[70%]  flex flex-col md:flex-row md:items-stretch items-center bg-white rounded-2xl shadow-2xl">
         <div className="md:w-[50%] w-full rounded-2xl flex flex-col items-center ">
-          <h2 className="text-3xl font-bold mt-10 text-red-600">
+          <h1 className="text-4xl font-bold mt-10 text-red-600">
             Sign In To Continue
-          </h2>
+          </h1>
           <form onSubmit={handleSubmit(onSubmit)} className="w-[80%] mt-10">
             <div
-              className="flex items-center justify-center border-b-2 relative w-full"
+              className="flex items-center justify-center border-b-2 relative w-full mt-20"
               onFocus={() => setEmail(true)}
             >
               <label
                 htmlFor="email"
                 className={`absolute left-1  ${
                   email
-                    ? "transition-all top-[-10px] text-sm"
-                    : "  top-2 text-xl transition-all ease-in"
+                    ? "transition-all top-[-15px] text-sm"
+                    : "  top-0 text-xl transition-all ease-in"
                 }`}
               >
                 Email
@@ -89,13 +89,13 @@ export default function LoginPage() {
             {errors.email && (
               <span className="error">{errors.email.message}</span>
             )}
-            <div className="flex items-center justify-center border-b-2 relative">
+            <div className="flex items-center justify-center border-b-2 relative mt-5">
               <label
                 htmlFor="password"
                 className={`absolute left-1  ${
                   pass
-                    ? "transition-all top-[-10px] text-sm"
-                    : "  top-2 text-xl transition-all ease-in"
+                    ? "transition-all top-[-15px] text-sm"
+                    : "  top-0 text-xl transition-all ease-in"
                 }`}
               >
                 Password
@@ -165,7 +165,7 @@ export default function LoginPage() {
             </div>
 
             <button
-              className="flex items-center justify-center gap-2 text-xl w-full bg-red-600 rounded-2xl hover:text-gray-600 duration-500 transition text-white font-semibold mt-4 md:mb-0 mb-4 "
+              className="flex items-center justify-center gap-2 text-2xl w-full bg-red-600 rounded-2xl hover:text-gray-600 duration-500 transition text-white font-semibold mt-4 md:mb-0 mb-4 py-2"
               type="submit"
             >
               <IoMdLogIn />
