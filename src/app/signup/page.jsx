@@ -159,7 +159,7 @@ export default function SignupPage() {
                     className="outline-none w-full"
                     onChange={handleChange}
                     onBlurCapture={(e) => {
-                      e.target.value.length > 0 ? "" : setlName(false);
+                      e.target.value.length > 0 ? "" : setName(false);
                     }}
                     {...register("name", { required: false })}
                   />

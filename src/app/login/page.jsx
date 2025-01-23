@@ -42,6 +42,9 @@ export default function LoginPage() {
         console.log("Logged In");
         router.push("/");
       }
+      if (response.status == 401) {
+        toast.error("Wrong Credentials");
+      }
     } catch (error) {
       toast.dismiss(toastId);
       toast.error(error.message);

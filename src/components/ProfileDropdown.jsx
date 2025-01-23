@@ -58,7 +58,7 @@ const ProfileDropDown = () => {
           className="absolute top-[118%] right-0 z-[1000]  divide-blue-600 overflow-hidden rounded-md border-[1px] border-richblack-700 bg-white"
           ref={ref}
         >
-          <Link href="/dashboard/UserProfile" onClick={() => setIsOpen(false)}>
+          <Link href="/dashboard/profile" onClick={() => setIsOpen(false)}>
             <div className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-black hover:bg-gray-300 ">
               <VscDashboard className="text-xl" />
               Dashboard
