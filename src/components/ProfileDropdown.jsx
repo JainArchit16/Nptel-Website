@@ -7,8 +7,10 @@ import ConfirmationModal from "./ConfirmationModal";
 
 import useLogout from "./useLogout";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const ProfileDropDown = () => {
+  const { data: session } = useSession();
   const [confirmationModal, setConfirmationModal] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -40,11 +42,12 @@ const ProfileDropDown = () => {
   const handleLogout = () => {
     setIsOpen(false);
   };
+  const lm = session?.user?.name;
 
   return (
     <button className="relative profile-dropdown">
       <img
-        src={`https://api.dicebear.com/7.x/initials/svg?seed=${"sally"}%20${"grenaud"}`}
+        src={`https://api.dicebear.com/7.x/initials/svg?seed=${lm}%20${` `}`}
         alt="xyz"
         className="aspect-square w-[40px] rounded-full object-cover"
         onClick={() => setIsOpen(!isOpen)}

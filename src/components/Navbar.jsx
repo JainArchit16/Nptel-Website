@@ -8,8 +8,10 @@ import ProfileDropDown from "../components/ProfileDropdown";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-// import image1 from "../../public/assests/mainLogo.jpg";
+import { useSession } from "next-auth/react";
+
 const Navbar = () => {
+  const { data: session } = useSession();
   let [open, setOpen] = useState(false);
   const router = useRouter();
   const paths = [
@@ -24,19 +26,20 @@ const Navbar = () => {
     setMenuOpen(!menuOpen);
   };
 
-  let loggedIn = false;
+  let loggedIn = session?.user;
 
   return (
     <header className="w-full shadow-md">
       <nav
         className={`flex flex-wrap justify-between items-center w-[98%] py-1 mx-auto`}
       >
-        <Link href="/" className="flex items-center w-[20%] h-[80%]">
+        <Link href="/" className="flex items-center w-[25%] h-[80%]">
           <img
             src="/assests/mainLogo.jpg"
             alt="logo"
             className="h-[45px] w-[45px] mr-4 rounded-full"
           />
+          <p className="text-xl">NPTEL Hub</p>
         </Link>
 
         <div className="hidden md:block w-[50%]">
@@ -75,17 +78,8 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              {/* <li>
-                <Link
-                  to="/signup"
-                  className=" text-xl duration-500 bg-red-600 p-2 rounded-2xl  text-gray-100 flex flex-row gap-2 justify-center items-center hover:scale-110 hover:text-gray-100"
-                >
-                  <SiGnuprivacyguard />
-                  Sign Up
-                </Link>
-              </li> */}
               <li>
-                <Link href="/signup" className="btn-7 p-2 rounded-lg">
+                <Link href="/signup" className="btn-7 p-1 rounded-lg">
                   <span className="flex flex-row justify-center items-center gap-1 text-sm md:text-lg">
                     <p className="z-[100] flex flex-row justify-center items-center gap-1">
                       <SiGnuprivacyguard />
@@ -95,7 +89,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/login" className="btn-7 p-2 rounded-lg">
+                <Link href="/login" className="btn-7 p-1 rounded-lg">
                   <span className="flex flex-row justify-center items-center gap-1 text-sm md:text-lg">
                     <p className="z-[100] flex flex-row justify-center items-center gap-1">
                       <IoMdLogIn />
