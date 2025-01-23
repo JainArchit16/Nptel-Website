@@ -10,10 +10,11 @@ import { IoMdLogIn } from "react-icons/io";
 import { MdOutlineMail } from "react-icons/md";
 import { BiSolidHide, BiSolidShow } from "react-icons/bi";
 import Link from "next/link";
+import { doCredentialLogin } from "../../../utils/loginHelper";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
 
   const [email, setEmail] = useState(false);
   const [pass, setPass] = useState(false);
@@ -26,24 +27,20 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm();
 
-  async function onSubmit(event) {
-    event.preventDefault();
-
+  async function onSubmit(data) {
     const toastId = toast.loading("Loading");
+    const { email, password } = data;
+    console.log(email);
+    console.log(password);
     try {
-      const { email, password } = data;
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await doCredentialLogin(email, password);
+      console.log(response);
+
+      toast.dismiss(toastId);
       if (response.ok) {
-        const result = await response.json();
-        localStorage.setItem("token", result.token); // Store JWT token
+        toast.success("Logged In");
+        console.log("Logged In");
         router.push("/");
-      } else {
-        const result = await response.json();
-        setError(result.error || "Login failed. Please try again.");
       }
     } catch (error) {
       toast.dismiss(toastId);
