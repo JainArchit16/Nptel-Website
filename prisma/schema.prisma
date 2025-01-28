@@ -8,11 +8,10 @@ datasource db {
 }
 
 model User {
-  userId       Int       @id @default(autoincrement())
-  name         String
-  email        String    @unique
-  passwordHash String
-  quizzes      Quiz[]
+  userId              Int                  @id @default(autoincrement())
+  name                String
+  email               String               @unique
+  passwordHash        String
   bookmarkedQuestions BookmarkedQuestion[]
   notes        Note[]
   gender       String?
@@ -20,71 +19,71 @@ model User {
 }
 
 model Subject {
-  subjectId Int       @id @default(autoincrement())
-  name      String    @unique // e.g., "Mathematics", "Physics"
-  quizzes   Quiz[]
+  subjectId Int        @id @default(autoincrement())
+  name      String     @unique
   questions Question[]
+  quizzes   Quiz[]
   resources Resource[]
 }
 
 model Question {
-  questionId    Int       @id @default(autoincrement())
-  week          Int
-  questionText  String
-  options       String[]  // Array of options, e.g., ["True", "False"] or ["A", "B", "C", "D", "E"]
-  correctOption Int       // Index of the correct option in the options array
-  subjectId     Int
-  subject       Subject   @relation(fields: [subjectId], references: [subjectId])
-  userAnswers   UserAnswer[]
+  questionId          Int                  @id @default(autoincrement())
+  week                Int
+  questionText        String
+  options             String[]
+  correctOption       Int
+  subjectId           Int
   bookmarkedQuestions BookmarkedQuestion[]
-  notes         Note[]
+  notes               Note[]
+  subject             Subject              @relation(fields: [subjectId], references: [subjectId])
+  userAnswers         UserAnswer[]
 }
 
 model Quiz {
-  quizId     Int       @id @default(autoincrement())
-  userId     Int
-  subjectId  Int
-  week       Int
-  score      Float
-  accuracy   Float?
-  timeTaken  Int?      // Stored in seconds
-  user       User      @relation(fields: [userId], references: [userId])
-  subject    Subject   @relation(fields: [subjectId], references: [subjectId])
+  quizId      Int          @id @default(autoincrement())
+  userId      Int
+  subjectId   Int
+  week        Int
+  score       Float
+  accuracy    Float?
+  timeTaken   Int?
+  subject     Subject      @relation(fields: [subjectId], references: [subjectId])
+  user        User         @relation(fields: [userId], references: [userId])
   userAnswers UserAnswer[]
 }
 
 model UserAnswer {
-  answerId   Int       @id @default(autoincrement())
-  quizId     Int
-  questionId Int
+  answerId       Int      @id @default(autoincrement())
+  quizId         Int
+  questionId     Int
   selectedOption String
-  isCorrect  Boolean
-  quiz       Quiz      @relation(fields: [quizId], references: [quizId])
-  question   Question  @relation(fields: [questionId], references: [questionId])
+  isCorrect      Boolean
+  question       Question @relation(fields: [questionId], references: [questionId])
+  quiz           Quiz     @relation(fields: [quizId], references: [quizId])
 }
 
 model BookmarkedQuestion {
-  bookmarkId  Int       @id @default(autoincrement())
-  userId      Int
-  questionId  Int
-  user        User      @relation(fields: [userId], references: [userId])
-  question    Question  @relation(fields: [questionId], references: [questionId])
+  bookmarkId Int      @id @default(autoincrement())
+  userId     Int
+  questionId Int
+  question   Question @relation(fields: [questionId], references: [questionId])
+  user       User     @relation(fields: [userId], references: [userId])
 }
 
 model Note {
-  noteId      Int       @id @default(autoincrement())
-  userId      Int
-  questionId  Int
-  noteText    String
-  user        User      @relation(fields: [userId], references: [userId])
-  question    Question  @relation(fields: [questionId], references: [questionId])
+  noteId     Int      @id @default(autoincrement())
+  userId     Int
+  questionId Int
+  noteText   String
+  question   Question @relation(fields: [questionId], references: [questionId])
+  user       User     @relation(fields: [userId], references: [userId])
 }
 
 model Resource {
-  resourceId Int    @id @default(autoincrement())
+  resourceId Int     @id @default(autoincrement())
   subjectId  Int
   week       Int
   pptLink    String?
   videoLink  String?
-  subject    Subject   @relation(fields: [subjectId], references: [subjectId])
+  subject    Subject @relation(fields: [subjectId], references: [subjectId])
 }

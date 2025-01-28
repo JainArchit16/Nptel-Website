@@ -16,6 +16,7 @@ const Navbar = () => {
   const router = useRouter();
   const paths = [
     ["/home", "Home"],
+    ["/quiz", "Quiz"],
     ["/gallery", "Gallery"],
     ["/about", "About Us"],
     ["/notice", "Notices"],
