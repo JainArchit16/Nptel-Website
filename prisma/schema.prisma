@@ -13,9 +13,10 @@ model User {
   email               String               @unique
   passwordHash        String
   bookmarkedQuestions BookmarkedQuestion[]
-  notes        Note[]
-  gender       String?
-  college      String?
+  notes               Note[]
+  gender              String?
+  college             String?
+  Quiz                Quiz[]
 }
 
 model Subject {
@@ -47,6 +48,7 @@ model Quiz {
   score       Float
   accuracy    Float?
   timeTaken   Int?
+  attemptTime DateTime     @default(now())
   subject     Subject      @relation(fields: [subjectId], references: [subjectId])
   user        User         @relation(fields: [userId], references: [userId])
   userAnswers UserAnswer[]
