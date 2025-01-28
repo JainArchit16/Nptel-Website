@@ -2,13 +2,14 @@
 import { useState, useEffect } from "react";
 
 export default function QuizPage({ params }) {
-  const { week } = params;
+  const { subjectId, week } = params;
   const [questions, setQuestions] = useState([]);
   const [error, setError] = useState(null);
   const [answers, setAnswers] = useState({});
 
   useEffect(() => {
-    fetch(`/api/quizzes/${week}`)
+    console.log("Subject ID:", subjectId, "Week:", week);
+    fetch(`/api/subjects/${subjectId}/weeks/${week}`)
       .then(async (res) => {
         if (!res.ok) {
           const errorData = await res.json();
@@ -27,7 +28,8 @@ export default function QuizPage({ params }) {
         console.error("Error fetching questions:", error);
         setError(error.message);
       });
-  }, [week]);
+  }, [subjectId, week]);
+  
 
   const handleOptionChange = (questionId, option) => {
     setAnswers({ ...answers, [questionId]: option });
@@ -47,7 +49,7 @@ export default function QuizPage({ params }) {
           fontSize: "32px",
         }}
       >
-        Quiz for Week {week}
+        Quiz for {`Subject ${subjectId}, Week ${week}`}
       </h1>
       {error ? (
         <p style={{ color: "red", textAlign: "center" }}>Error: {error}</p>
@@ -81,12 +83,7 @@ export default function QuizPage({ params }) {
                   gap: "10px",
                 }}
               >
-                {[
-                  question.optionA,
-                  question.optionB,
-                  question.optionC,
-                  question.optionD,
-                ].map((option, index) => (
+                {question.options.map((option, index) => (
                   <label
                     key={index}
                     style={{

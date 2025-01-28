@@ -9,7 +9,7 @@
             "C. Learning is a relatively temporary change in behavior",
             "D. none of the given"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 1,
@@ -21,7 +21,7 @@
             "C. visible change in emotions",
             "D. observable change in behavior"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 1,
@@ -33,19 +33,19 @@
             "C. physical structure of the heart",
             "D. chemical structure of the spinal cord"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 1,
         "subject": "Psychology_of_Learning",
-        "questionText": "4) Watson, one of the first psychologists to study learning and behavior is known for the ____.",
+        "questionText": "4) Watson, one of the first psychologists to study learning and behavior is known for the ____. N",
         "options": [
             "A. Little Albert experiment",
             "B. Little John experiment",
             "C. Little Robert experiment",
             "D. Little Johnny experiment"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 1,
@@ -58,7 +58,7 @@
             "D. principles of memory",
             "E. principles of retention"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 1,
@@ -70,7 +70,7 @@
             "C. conscious over-competence",
             "D. unconscious over-competence"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 1,
@@ -82,7 +82,7 @@
             "C. Forgetting",
             "D. Meaningful learning"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 1,
@@ -94,7 +94,7 @@
             "C. individual responsibility",
             "D. all of the given"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 1,
@@ -106,7 +106,7 @@
             "C. Bruner",
             "D. Bandura"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 1,
@@ -118,7 +118,7 @@
             "C. Freud",
             "D. Pavlov"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 10,
@@ -130,7 +130,7 @@
             "C. society readiness",
             "D. teacher readiness P"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 10,
@@ -142,7 +142,7 @@
             "C. Their context",
             "D. All of the given"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 10,
@@ -154,7 +154,7 @@
             "C. Clear, explanatory and timely feedback to students is important for learning",
             "D. Students tend to enjoy learning and have better outcomes when their motivation is"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 10,
@@ -164,7 +164,7 @@
             "A. True",
             "B. False"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 10,
@@ -176,7 +176,7 @@
             "C. rating scales",
             "D. ignorance N"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 10,
@@ -188,7 +188,7 @@
             "C. social",
             "D. none of the given"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 10,
@@ -200,7 +200,7 @@
             "C. Formation",
             "D. Evaluation"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 10,
@@ -212,7 +212,7 @@
             "C. Collective assessment",
             "D. None of the given"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 10,
@@ -224,7 +224,7 @@
             "C. Facilitator-level",
             "D. Personal-level"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 11,
@@ -236,7 +236,7 @@
             "C. social cognition",
             "D. emotional schema P"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 11,
@@ -248,7 +248,7 @@
             "C. reciprocal dynamism",
             "D. cognitive conflict"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 11,
@@ -260,7 +260,7 @@
             "C. egoistic",
             "D. egomaniac"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 11,
@@ -272,7 +272,7 @@
             "C. It includes complex abilities like theory of mind",
             "D. There are no cultural differences in social cognition"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 11,
@@ -284,7 +284,7 @@
             "C. schema influence",
             "D. social mediation"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 11,
@@ -296,7 +296,7 @@
             "C. Bandura",
             "D. Freud"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 11,
@@ -308,7 +308,7 @@
             "C. awards",
             "D. reinforcements"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 11,
@@ -320,7 +320,7 @@
             "C. six",
             "D. seven"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 11,
@@ -332,7 +332,7 @@
             "C. verbal instructional",
             "D. contextual"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 11,
@@ -344,7 +344,7 @@
             "C. collective determinism",
             "D. reciprocal dynamism"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 12,
@@ -356,7 +356,7 @@
             "C. multidimensional T",
             "D. none of the given"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 12,
@@ -368,7 +368,7 @@
             "C. financial sustainability",
             "D. economic sustainability"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 12,
@@ -380,7 +380,7 @@
             "C. social marketing",
             "D. social economics"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 12,
@@ -392,7 +392,7 @@
             "C. Climate change",
             "D. Natural resources"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 12,
@@ -404,7 +404,7 @@
             "C. Privatization of institutes",
             "D. Universal youth literacy"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 12,
@@ -414,7 +414,7 @@
             "A. False",
             "B. True"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 12,
@@ -426,7 +426,7 @@
             "C. teaching to feeling",
             "D. teaching to learning"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 12,
@@ -438,7 +438,7 @@
             "C. normative competency",
             "D. systems thinking competency"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 12,
@@ -450,7 +450,7 @@
             "C. behavioral learning",
             "D. social and emotional learning"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 12,
@@ -462,7 +462,7 @@
             "C. Global Achievement Programme",
             "D. General Awareness Programme"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 2,
@@ -474,7 +474,7 @@
             "C. John Watson T",
             "D. Lev Vygotsky"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 2,
@@ -486,7 +486,7 @@
             "C. thinking",
             "D. stimulus reaction"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 2,
@@ -498,7 +498,7 @@
             "C. Cognitivism",
             "D. Evolutionary psychology"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 2,
@@ -510,7 +510,7 @@
             "C. Gestalt psychology",
             "D. Positive psychology"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 2,
@@ -522,7 +522,7 @@
             "C. German Gestalt",
             "D. Robert J. Sternberg"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 2,
@@ -534,7 +534,7 @@
             "C. linguistic",
             "D. kinesthetic"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 2,
@@ -546,7 +546,7 @@
             "C. Cognitive Appraisal System",
             "D. Cognitive Assessment System"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 2,
@@ -558,7 +558,7 @@
             "C. Biological battery learning",
             "D. Brain biology learning"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 2,
@@ -570,7 +570,7 @@
             "C. ten",
             "D. seven"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 2,
@@ -582,7 +582,7 @@
             "C. social",
             "D. radical"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 3,
@@ -594,7 +594,7 @@
             "C. storage",
             "D. imagination E"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 3,
@@ -607,7 +607,7 @@
             "D. Recollection",
             "E. Forgetting"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 3,
@@ -619,7 +619,7 @@
             "C. Encoding",
             "D. Thinking"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 3,
@@ -631,7 +631,7 @@
             "C. difficulty in reading facial expressions",
             "D. difficulty in getting good academic scores"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 3,
@@ -643,7 +643,7 @@
             "C. There is no limit on how much information can be processed at each stage",
             "D. Information is processed in steps"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 3,
@@ -655,7 +655,7 @@
             "C. Retrieval",
             "D. None of the given"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 3,
@@ -667,7 +667,7 @@
             "C. Piaget",
             "D. Craik & Lockhart"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 3,
@@ -679,7 +679,7 @@
             "C. Procedural",
             "D. None of the given"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 3,
@@ -691,7 +691,7 @@
             "C. specific way memories are retrieved",
             "D. all of the given"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 3,
@@ -703,7 +703,7 @@
             "C. physical effort",
             "D. performance"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 4,
@@ -715,7 +715,7 @@
             "C. divergent T",
             "D. convergent"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 4,
@@ -727,7 +727,7 @@
             "C. symbolic",
             "D. convergent"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 4,
@@ -739,7 +739,7 @@
             "C. in gestures and movements",
             "D. all of the given"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 4,
@@ -751,7 +751,7 @@
             "C. \u201caha\u201d",
             "D. none of the given"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 4,
@@ -763,7 +763,7 @@
             "C. procedural",
             "D. metacognitive"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 4,
@@ -776,7 +776,7 @@
             "D. is a regulatory system that helps a person understand and control his or her own",
             "E. Metacognition"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 4,
@@ -787,7 +787,7 @@
             "C. negotiated learning",
             "D. avoiding reflective discussions"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 4,
@@ -800,7 +800,7 @@
             "D. It is all about developing innovative solutions to problems.",
             "E. It requires a compilation of analytical, problem-solving, organizational and"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 4,
@@ -813,7 +813,7 @@
             "D. preparation",
             "E. elaboration"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 4,
@@ -825,7 +825,7 @@
             "C. schema",
             "D. proposition"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 5,
@@ -838,7 +838,7 @@
             "D. financial gain",
             "E. punishment P"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 5,
@@ -850,7 +850,7 @@
             "C. Introjected regulation",
             "D. Motivational learning"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 5,
@@ -862,7 +862,7 @@
             "C. Atkinson",
             "D. Zajonc"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 5,
@@ -874,7 +874,7 @@
             "C. Goal setting",
             "D. None of the given"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 5,
@@ -886,7 +886,7 @@
             "C. no",
             "D. parabolic"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 5,
@@ -898,7 +898,7 @@
             "C. biological needs produce unpleasant states of arousal which people seek to reduce",
             "D. none of the given"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 5,
@@ -910,7 +910,7 @@
             "C. positive",
             "D. negative"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 5,
@@ -923,7 +923,7 @@
             "D. Growth needs are more psychological needs",
             "E. Motivation is seen as being not just concerned with tension reduction and survival but"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 5,
@@ -936,7 +936,7 @@
             "D. introjected and extrinsic",
             "E. introjected and intrinsic"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 5,
@@ -948,7 +948,7 @@
             "C. accelerated heart rate",
             "D. all of the given"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 6,
@@ -960,7 +960,7 @@
             "C. five",
             "D. six"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 6,
@@ -972,7 +972,7 @@
             "C. Studies show that EI does not impact aspects of one\u2019s life like academic performance",
             "D. Peter Salovey and John Mayer were the first to develop a psychological theory of"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 6,
@@ -984,7 +984,7 @@
             "C. Emotional literacy",
             "D. Self regulation"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 6,
@@ -996,7 +996,7 @@
             "C. Being able to say no when we need to",
             "D. Being able to hide our feelings from others"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 6,
@@ -1008,7 +1008,7 @@
             "C. seven",
             "D. eleven"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 6,
@@ -1020,7 +1020,7 @@
             "C. empathy",
             "D. emotional labor"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 6,
@@ -1032,7 +1032,7 @@
             "C. done by actively shaping and directing feelings",
             "D. all of the given"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 6,
@@ -1044,7 +1044,7 @@
             "C. surface acting",
             "D. emotional literacy"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 6,
@@ -1056,7 +1056,7 @@
             "C. contagious neurons",
             "D. None of the given"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 7,
@@ -1068,7 +1068,7 @@
             "C. Gagne T",
             "D. Kolb"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 7,
@@ -1080,7 +1080,7 @@
             "C. Social and social-constructivist",
             "D. Behaviorist"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 7,
@@ -1092,7 +1092,7 @@
             "C. It is pervasive",
             "D. The locus of evaluation resides definitely outside the learner"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 7,
@@ -1104,7 +1104,7 @@
             "C. humanistic",
             "D. social"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 7,
@@ -1117,7 +1117,7 @@
             "D. ego",
             "E. perception"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 7,
@@ -1129,7 +1129,7 @@
             "C. Kinesthetic",
             "D. Auditory"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 7,
@@ -1141,7 +1141,7 @@
             "C. visual",
             "D. logical"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 7,
@@ -1154,7 +1154,7 @@
             "D. eclectic",
             "E. all of the given"
         ],
-        "correctOption": "E"
+        "correctOption": 4
     },
     {
         "week": 7,
@@ -1166,7 +1166,7 @@
             "C. facilitator",
             "D. co-learner"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 7,
@@ -1178,7 +1178,7 @@
             "C. development",
             "D. evaluation"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 8,
@@ -1190,7 +1190,7 @@
             "C. the art of teaching children",
             "D. none of the given P"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 8,
@@ -1202,7 +1202,7 @@
             "C. It enhances the student-teacher relationship",
             "D. It enables teachers to influence student learning with an intention to capture the"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 8,
@@ -1214,7 +1214,7 @@
             "C. collaborative",
             "D. integrative"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 8,
@@ -1226,7 +1226,7 @@
             "C. inquiry-based learning",
             "D. metalearning"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 8,
@@ -1238,7 +1238,7 @@
             "C. blurring boundaries",
             "D. none of the given"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 8,
@@ -1250,7 +1250,7 @@
             "C. application",
             "D. reflecting"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 8,
@@ -1262,7 +1262,7 @@
             "C. Converging",
             "D. Diverging"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 8,
@@ -1274,7 +1274,7 @@
             "C. educational specialization",
             "D. genes"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 8,
@@ -1286,7 +1286,7 @@
             "C. application and transfer",
             "D. reflection"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 8,
@@ -1298,7 +1298,7 @@
             "C. frame of context",
             "D. none of the given"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 9,
@@ -1310,7 +1310,7 @@
             "C. computer enhanced",
             "D. electricity enhanced T"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 9,
@@ -1322,7 +1322,7 @@
             "C. interactive",
             "D. none of the given"
         ],
-        "correctOption": "B"
+        "correctOption": 1
     },
     {
         "week": 9,
@@ -1334,7 +1334,7 @@
             "C. it saves time for the students, they don\u2019t need to travel to the institution",
             "D. it is targeted to cater to the needs of students specifically"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 9,
@@ -1346,7 +1346,7 @@
             "C. social",
             "D. idiosyncratic"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 9,
@@ -1358,7 +1358,7 @@
             "C. virtual communities",
             "D. all of the given"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 9,
@@ -1370,7 +1370,7 @@
             "C. our brain has made stronger connections with this information",
             "D. our brain has prioritized this information over others"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 9,
@@ -1382,7 +1382,7 @@
             "C. shorter attention spans",
             "D. None of the given"
         ],
-        "correctOption": "C"
+        "correctOption": 2
     },
     {
         "week": 9,
@@ -1394,7 +1394,7 @@
             "C. retrieval",
             "D. working memory"
         ],
-        "correctOption": "D"
+        "correctOption": 3
     },
     {
         "week": 9,
@@ -1406,7 +1406,7 @@
             "C. stress",
             "D. emotion"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     },
     {
         "week": 9,
@@ -1418,6 +1418,6 @@
             "C. prototype",
             "D. instructional map"
         ],
-        "correctOption": "A"
+        "correctOption": 0
     }
 ]

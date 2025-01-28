@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 async function importQuizData() {
     try {
-        const filePath = path.join(process.cwd(), 'extracted_data\quiz_data.json'); // Path to the JSON file 
+        const filePath = path.join(process.cwd(), 'extracted_data/quiz_data.json'); // Path to the JSON file 
         const data = await fs.readFile(filePath, 'utf-8'); // Read the file
         const quizData = JSON.parse(data); // Parse the JSON data
 

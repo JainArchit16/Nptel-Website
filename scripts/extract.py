@@ -28,7 +28,7 @@ def extract_questions_answers(pdf_path, week, subject):
 
                 # Detect question
                 if question_pattern.match(line):
-                    if question and len(options) >= 2 and correct_answer:
+                    if question and len(options) >= 2 and correct_answer is not None:
                         quiz_data.append({
                             'week': week,
                             'subject': subject,
@@ -48,7 +48,11 @@ def extract_questions_answers(pdf_path, week, subject):
 
                 # Detect correct answer
                 elif correct_pattern.match(line):
-                    correct_answer = correct_pattern.match(line).group(1)
+                    correct_letter = correct_pattern.match(line).group(1)
+                    if correct_letter in ["True", "False"]:
+                        correct_answer = 0 if correct_letter == "True" else 1
+                    else:
+                        correct_answer = ord(correct_letter) - ord('A')  # Convert A-E to 0-4
 
                 # Multi-line question continuation
                 else:
@@ -56,7 +60,7 @@ def extract_questions_answers(pdf_path, week, subject):
                         multi_line_question += ' ' + line
 
             # Save last question if all parts are present
-            if question and len(options) >= 2 and correct_answer:
+            if question and len(options) >= 2 and correct_answer is not None:
                 quiz_data.append({
                     'week': week,
                     'subject': subject,
