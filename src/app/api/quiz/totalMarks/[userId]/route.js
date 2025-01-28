@@ -5,12 +5,12 @@ const prisma = new PrismaClient();
 // GET /api/quizzes/user/:userId
 export const GET = async (request, { params }) => {
   try {
-    const { userId } = params;
+    const { userId } = await params;
 
+    // console.log(userId);
     if (!userId) {
       return new Response("User ID is required", { status: 400 });
     }
-
     // Fetch quizzes for the specific user
     const quizzes = await prisma.quiz.findMany({
       where: {
