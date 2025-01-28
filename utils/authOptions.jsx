@@ -12,39 +12,33 @@ export const authOptions = {
   providers: [
     CredentialsProvider({
       credentials: {
-        email: {},
-        password: {},
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
         if (!credentials) {
           return null;
         }
         try {
-          // Find user by email
           const user = await prisma.user.findUnique({
             where: {
               email: credentials.email,
             },
           });
-          // console.log(user);
           if (
             user &&
             (await bcrypt.compare(credentials.password, user.passwordHash))
           ) {
-            // Authentication successful
             return {
               id: user.userId,
               name: user.name,
               email: user.email,
-              user,
             };
           }
-
-          // Authentication failed
           return null;
         } catch (error) {
           console.error("Error in authorize:", error);
-          return false;
+          return null;
         }
       },
     }),
@@ -52,23 +46,19 @@ export const authOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        console.log(user);
         token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
       }
       return token;
     },
     async session({ session, token }) {
-      if (token && session.user) {
-        session.user.id = token.id;
-        const user = await prisma.user.findUnique({
-          where: {
-            email: session.user.email,
-          },
-        });
-
-        if (user) {
-          session.user.name = user.name;
-        }
+      if (token) {
+        session.user = {
+          id: token.id,
+          name: token.name,
+          email: token.email,
+        };
       }
       return session;
     },
