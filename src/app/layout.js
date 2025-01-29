@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/components/AuthProvider";
+import { motion } from "framer-motion";
 // import { SessionProvider } from "next-auth/react";
 
 const geistSans = Geist({
@@ -29,9 +30,16 @@ export default function RootLayout({ children }) {
             <link rel="icon" href="/assests/mainLogo.jpg" />
           </head>
           <body className="h-full w-full">
-            <Toaster />
-            <Navbar />
-            {children}
+            <motion
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.3 }}
+            >
+              <Toaster />
+              <Navbar />
+              {children}
+            </motion>
           </body>
         </html>
       </AuthProvider>

@@ -17,9 +17,7 @@ const Navbar = () => {
   const paths = [
     ["/home", "Home"],
     ["/quiz", "Quiz"],
-    ["/gallery", "Gallery"],
-    ["/about", "About Us"],
-    ["/notice", "Notices"],
+    ["/dashboard/uploadPdf", "Questions"],
   ];
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,21 +28,21 @@ const Navbar = () => {
   let loggedIn = session?.user;
 
   return (
-    <header className="w-full shadow-md">
+    <header className="w-full shadow-md bg-gradient-to-r to-white via-red-100 from-red-200">
       <nav
-        className={`flex flex-wrap justify-between items-center w-[98%] py-1 mx-auto`}
+        className={`flex flex-wrap justify-between items-center w-[98%] mx-auto`}
       >
-        <Link href="/" className="flex items-center w-[25%] h-[80%]">
+        <Link href="/" className="flex items-center w-[30%] h-[80%]">
           <img
             src="/assests/mainLogo.jpg"
             alt="logo"
             className="h-[45px] w-[45px] mr-4 rounded-full"
           />
-          <p className="text-xl">NPTEL Hub</p>
+          <p className="text-xl font-semibold">NPTEL Hub</p>
         </Link>
 
-        <div className="hidden md:block w-[50%]">
-          <ul className="text-xl flex font-medium p-0  space-x-8 flex-row mt-0 border-0 bg-white ">
+        <div className="hidden md:block w-[30%] mx-auto justify-center">
+          <ul className="text-xl flex font-medium p-0 gap-10 flex-row mt-0 border-0 w-[90%] mx-auto justify-center">
             {paths.map((path, index) => (
               <li key={index}>
                 <Link
@@ -62,23 +60,15 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <div className="flex md:flex-row md:pb-0 md:w-auto md:items-center md:justify-center gap-3 transition-all duration-500 ease-in list-none">
+        <div className="flex md:flex-row md:pb-0 md:items-center md:justify-center gap-3 transition-all duration-500 ease-in list-none w-[30%]">
           {loggedIn ? (
-            <>
-              <div className="flex flex-row gap-6 items-center">
+            <div className="w-full">
+              <div className="flex flex-row gap-6 items-center w-full justify-end">
                 <ProfileDropDown />
               </div>
-              {/* <div className="lg:hidden">
-                <button
-                  onClick={toggleMenu}
-                  className="text-white focus:outline-none"
-                >
-                  {menuOpen ? "Close" : "Menu"}
-                </button>
-              </div> */}
-            </>
+            </div>
           ) : (
-            <>
+            <div className="w-full flex flex-row gap-10 justify-end">
               <li>
                 <Link href="/signup" className="btn-7 p-1 rounded-lg">
                   <span className="flex flex-row justify-center items-center gap-1 text-sm md:text-lg">
@@ -90,7 +80,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/login" className="btn-7 p-1 rounded-lg">
+                <Link href="/login" className="btn-7 p-1 rounded-lg mr-14">
                   <span className="flex flex-row justify-center items-center gap-1 text-sm md:text-lg">
                     <p className="z-[100] flex flex-row justify-center items-center gap-1">
                       <IoMdLogIn />
@@ -104,26 +94,8 @@ const Navbar = () => {
                   <span>Alternate</span>
                 </a>
               </div> */}
-            </>
+            </div>
           )}
-          {/* (
-            <li>
-              <Link
-                to="/dashboard"
-                className="md:ml-8 text-xl  text-gray-800 hover:text-white duration-500 flex items-center"
-              >
-                <img
-                  src={
-                    user.photoURL
-                      ? user.photoURL
-                      : "https://api.dicebear.com/7.x/initials/svg?seed=${firstName}%20${lastName}"
-                  }
-                  alt="image"
-                  className="h-10 w-10 rounded-full border-2 border-gray-300 object-cover cursor-pointer"
-                />
-              </Link>
-            </li>
-          ) */}
 
           <div
             onClick={() => setOpen(!open)}

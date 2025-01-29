@@ -68,7 +68,7 @@ export default function LoginPage() {
                 className={`absolute left-1  ${
                   email
                     ? "transition-all top-[-15px] text-sm"
-                    : "  top-0 text-xl transition-all ease-in"
+                    : "  top-0 text-xl transition-all ease-in font-semibold"
                 }`}
               >
                 Email
@@ -95,7 +95,7 @@ export default function LoginPage() {
                 className={`absolute left-1  ${
                   pass
                     ? "transition-all top-[-15px] text-sm"
-                    : "  top-0 text-xl transition-all ease-in"
+                    : "  top-0 text-xl transition-all ease-in font-semibold"
                 }`}
               >
                 Password
