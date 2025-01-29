@@ -7,13 +7,9 @@ const prisma = new PrismaClient()
 
 export async function POST(request) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session || !session.user) {
-      return NextResponse.json({ error: "Not authenticated" }, { status: 401 })
-    }
 
-    const { subjectId, week, answers } = await request.json()
-    const userId = session.user.id
+    const { subjectId, week, answers ,userId} = await request.json()
+    console.log("API ki id",userId);
 
     console.log("Received data:", { subjectId, week, answers, userId })
 

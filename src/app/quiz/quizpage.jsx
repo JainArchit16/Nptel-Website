@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 export default function QuizPage({ params }) {
-  const { subjectId, week } = params;
+  const { subjectId, week, id} = params;
   const [questions, setQuestions] = useState([]);
   const [error, setError] = useState(null);
   const [answers, setAnswers] = useState({});
@@ -10,7 +10,7 @@ export default function QuizPage({ params }) {
   const [quizResults, setQuizResults] = useState(null);
 
   useEffect(() => {
-    console.log("Subject ID:", subjectId, "Week:", week);
+    console.log("Subject ID:", subjectId, "Week:", week, "User id", id);
     fetch(`/api/subjects/${subjectId}/weeks/${week}`)
       .then(async (res) => {
         if (!res.ok) {
@@ -52,7 +52,7 @@ export default function QuizPage({ params }) {
               selectedOption,
             })
           ),
-          userId: 1, // Add a dummy userId for now
+          userId: id, // Add a dummy userId for now
         }),
       });
 

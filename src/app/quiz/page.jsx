@@ -1,8 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
-import QuizPage from "./quizpage"; // Import the QuizPage component
+import { useSession } from "next-auth/react";
+import QuizPage from "./quizpage"; 
 
 export default function SubjectWeekSelector() {
+  const { data: session } = useSession();
+  const id = session?.user?.id;
+  console.log(id);
   const [subjects, setSubjects] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [selectedWeek, setSelectedWeek] = useState(null);
@@ -90,7 +94,7 @@ export default function SubjectWeekSelector() {
 
       <div style={{ marginTop: "20px" }}>
         {selectedSubject && selectedWeek ? (
-          <QuizPage params={{ subjectId: selectedSubject, week: selectedWeek }} />
+          <QuizPage params={{ subjectId: selectedSubject, week: selectedWeek,id: id}} />
         ) : (
           <p>
             {selectedSubject
