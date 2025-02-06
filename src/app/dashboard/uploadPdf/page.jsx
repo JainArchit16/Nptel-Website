@@ -1,27 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 export default function UploadForm() {
-  const [week, setWeek] = useState("");
-  const [subjects, setSubjects] = useState([]);
-  const [selectedSubject, setSelectedSubject] = useState("");
-  const [newSubjectName, setNewSubjectName] = useState("");
   const [fileData, setFileData] = useState(null);
   const [message, setMessage] = useState("");
-
-  // Fetch existing subjects on mount
-  useEffect(() => {
-    async function fetchSubjects() {
-      try {
-        const res = await fetch("/api/subjects");
-        const data = await res.json();
-        setSubjects(data);
-      } catch (error) {
-        console.error("Error fetching subjects:", error);
-      }
-    }
-    fetchSubjects();
-  }, []);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -31,10 +14,32 @@ export default function UploadForm() {
     reader.onload = (evt) => {
       try {
         const json = JSON.parse(evt.target.result);
+
+        // Validate array structure
+        if (!Array.isArray(json)) {
+          throw new Error("JSON should be an array of questions");
+        }
+
+        // Validate each question object
+        const isValid = json.every(
+          (q) =>
+            q.hasOwnProperty("subject") &&
+            q.hasOwnProperty("week") &&
+            q.hasOwnProperty("questionText") &&
+            q.hasOwnProperty("options") &&
+            q.hasOwnProperty("correctOption")
+        );
+
+        if (!isValid) {
+          throw new Error("Invalid question structure in JSON");
+        }
+
         setFileData(json);
+        setMessage("");
       } catch (error) {
         console.error("Invalid JSON file:", error);
-        setMessage("Invalid JSON file");
+        setMessage(error.message);
+        setFileData(null);
       }
     };
     reader.readAsText(file);
@@ -43,32 +48,30 @@ export default function UploadForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Determine the subject name based on selection
-    const subjectName =
-      selectedSubject === "new" ? newSubjectName : selectedSubject;
-
-    if (!week || !subjectName || !fileData) {
-      setMessage("Please fill in all fields and select a valid JSON file.");
+    if (!fileData) {
+      setMessage("Please select a valid JSON file.");
       return;
     }
+    const id = toast.loading("Uploading");
+    try {
+      const res = await fetch("/api/quiz/uploadQuestions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(fileData),
+      });
 
-    const payload = {
-      week: parseInt(week, 10),
-      subjectName,
-      questions: fileData,
-    };
-
-    const res = await fetch("/api/uploadQuestions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    const data = await res.json();
-    if (res.ok) {
-      setMessage("Upload successful!");
-    } else {
-      setMessage(`Error: ${data.message}`);
+      const data = await res.json();
+      toast.dismiss(id);
+      if (res.ok) {
+        setMessage(`Upload successful! Processed ${fileData.length} questions`);
+        setFileData(null);
+        toast.success("Uploaded");
+      } else {
+        throw new Error(data.message || "Upload failed");
+      }
+    } catch (error) {
+      toast.error("Error");
+      setMessage(`Error: ${error.message}`);
     }
   };
 
@@ -83,66 +86,11 @@ export default function UploadForm() {
         <h1 className="text-4xl font-bold text-gray-900 text-center mb-8">
           📚 Course Content Upload
           <span className="block text-xl font-normal text-gray-600 mt-2">
-            Upload weekly questions in JSON format
+            Upload questions in JSON format
           </span>
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Week Input */}
-          <div className="space-y-1">
-            <label className="block text-sm font-medium text-gray-700">
-              Week Number
-            </label>
-            <input
-              type="number"
-              value={week}
-              onChange={(e) => setWeek(e.target.value)}
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-              placeholder="Enter week number..."
-              required
-            />
-          </div>
-
-          {/* Subject Selection */}
-          <div className="space-y-1">
-            <label className="block text-sm font-medium text-gray-700">
-              Subject
-            </label>
-            <select
-              value={selectedSubject}
-              onChange={(e) => setSelectedSubject(e.target.value)}
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all appearance-none"
-              required
-            >
-              <option value="" disabled>
-                Select existing subject
-              </option>
-              {subjects.map((subject) => (
-                <option key={subject.subjectId} value={subject.name}>
-                  {subject.name}
-                </option>
-              ))}
-              <option value="new">➕ Create New Subject</option>
-            </select>
-          </div>
-
-          {/* New Subject Input */}
-          {selectedSubject === "new" && (
-            <div className="space-y-1 animate-fadeIn">
-              <label className="block text-sm font-medium text-gray-700">
-                New Subject Name
-              </label>
-              <input
-                type="text"
-                value={newSubjectName}
-                onChange={(e) => setNewSubjectName(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                placeholder="Enter new subject name..."
-                required
-              />
-            </div>
-          )}
-
           {/* File Upload */}
           <div className="space-y-1">
             <label className="block text-sm font-medium text-gray-700">

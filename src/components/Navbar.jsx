@@ -1,9 +1,7 @@
 "use client";
 
-import { TiThMenu } from "react-icons/ti";
-import { FaWindowClose } from "react-icons/fa";
-import { IoMdLogIn } from "react-icons/io";
-import { SiGnuprivacyguard } from "react-icons/si";
+import { FiMenu, FiX } from "react-icons/fi";
+import { RiLoginBoxLine, RiUserAddLine } from "react-icons/ri";
 import ProfileDropDown from "../components/ProfileDropdown";
 import Link from "next/link";
 import { useState } from "react";
@@ -12,119 +10,140 @@ import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const { data: session } = useSession();
-  let [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const paths = [
-    ["/", "Home"],
-    ["/quiz", "Quiz"],
-    ["/dashboard/uploadPdf", "Questions"],
+
+  const navigation = [
+    { path: "/", name: "Home" },
+    { path: "/quiz", name: "Quiz" },
+    { path: "/dashboard/uploadPdf", name: "Questions" },
   ];
 
-  const [menuOpen, setMenuOpen] = useState(false);
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  let loggedIn = session?.user;
+  const loggedIn = session?.user;
 
   return (
-    <header className="w-full shadow-md bg-gradient-to-b to-white via-red-100 from-red-200">
-      <nav
-        className={`flex flex-wrap justify-between items-center w-[98%] mx-auto`}
-      >
-        <Link href="/" className="flex items-center w-[30%] h-[80%]">
-          <img
-            src="/assests/mainLogo.jpg"
-            alt="logo"
-            className="h-[45px] w-[45px] mr-4 rounded-full"
-          />
-          <p className="text-xl font-semibold">NPTEL Hub</p>
-        </Link>
-
-        <div className="hidden md:block w-[30%] mx-auto justify-center">
-          <ul className="text-xl flex font-medium p-0 gap-10 flex-row mt-0 border-0 w-[90%] mx-auto justify-center">
-            {paths.map((path, index) => (
-              <li key={index}>
-                <Link
-                  href={path[0]}
-                  className={`block py-2 mb-2 px-3 text-gray-800  hover:text-white hover:bg-red-400 hover:rounded-2xl  transition-all duration-[300ms] ease-in ${
-                    router.pathname === path[0]
-                      ? "bg-red-400   text-white rounded-2xl transition-all duration-[300ms] ease-in"
-                      : ""
-                  }`}
-                >
-                  {path[1]}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="flex md:flex-row md:pb-0 md:items-center md:justify-center gap-3 transition-all duration-500 ease-in list-none w-[30%]">
-          {loggedIn ? (
-            <div className="w-full">
-              <div className="flex flex-row gap-6 items-center w-full justify-end my-4">
-                <ProfileDropDown />
-              </div>
-            </div>
-          ) : (
-            <div className="w-full flex flex-row gap-10 justify-end">
-              <li>
-                <Link href="/signup" className="btn-7 p-1 rounded-lg">
-                  <span className="flex flex-row justify-center items-center gap-1 text-sm md:text-lg">
-                    <p className="z-[100] flex flex-row justify-center items-center gap-1">
-                      <SiGnuprivacyguard />
-                      SignUp
-                    </p>
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/login" className="btn-7 p-1 rounded-lg mr-14">
-                  <span className="flex flex-row justify-center items-center gap-1 text-sm md:text-lg">
-                    <p className="z-[100] flex flex-row justify-center items-center gap-1">
-                      <IoMdLogIn />
-                      Login
-                    </p>
-                  </span>
-                </Link>
-              </li>
-              {/* <div>
-                <a class="btn-7" href="#">
-                  <span>Alternate</span>
-                </a>
-              </div> */}
-            </div>
-          )}
-
-          <div
-            onClick={() => setOpen(!open)}
-            className="text-3xl cursor-pointer md:hidden flex items-center"
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo Section */}
+          <Link
+            href="/"
+            className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
           >
-            {open ? <FaWindowClose /> : <TiThMenu className="text-black" />}
+            <img
+              src="/assests/mainLogo.jpg"
+              alt="NPTEL Hub Logo"
+              className="h-10 w-10 rounded-full border-2 border-gray-200"
+            />
+            <span className="text-xl font-semibold text-gray-900 tracking-tight">
+              NPTEL Hub
+            </span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            <ul className="flex space-x-6">
+              {navigation.map((item) => (
+                <li key={item.path}>
+                  <Link
+                    href={item.path}
+                    className={`relative px-3 py-2 text-sm font-medium ${
+                      router.pathname === item.path
+                        ? "text-blue-600"
+                        : "text-gray-600 hover:text-blue-500"
+                    } transition-colors`}
+                  >
+                    {item.name}
+                    {router.pathname === item.path && (
+                      <span className="absolute inset-x-1 -bottom-1 h-0.5 bg-blue-500" />
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Auth Section */}
+          <div className="flex items-center space-x-4">
+            {loggedIn ? (
+              <ProfileDropDown />
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="hidden md:flex items-center space-x-1.5 px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-500 transition-colors"
+                >
+                  <RiLoginBoxLine className="w-5 h-5" />
+                  <span>Login</span>
+                </Link>
+                <Link
+                  href="/signup"
+                  className="hidden md:flex items-center space-x-1.5 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+                >
+                  <RiUserAddLine className="w-5 h-5" />
+                  <span>Sign Up</span>
+                </Link>
+              </>
+            )}
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+            >
+              {isOpen ? (
+                <FiX className="w-6 h-6" />
+              ) : (
+                <FiMenu className="w-6 h-6" />
+              )}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="md:hidden pb-4">
+            <ul className="pt-4 space-y-2 border-t border-gray-100">
+              {navigation.map((item) => (
+                <li key={item.path}>
+                  <Link
+                    href={item.path}
+                    className={`block px-4 py-2 text-base font-medium ${
+                      router.pathname === item.path
+                        ? "text-blue-600 bg-blue-50"
+                        : "text-gray-600 hover:bg-gray-50"
+                    } rounded-lg`}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+              {!loggedIn && (
+                <>
+                  <li>
+                    <Link
+                      href="/login"
+                      className="flex items-center space-x-2 px-4 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 rounded-lg"
+                    >
+                      <RiLoginBoxLine className="w-5 h-5" />
+                      <span>Login</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/signup"
+                      className="flex items-center space-x-2 px-4 py-2 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+                    >
+                      <RiUserAddLine className="w-5 h-5" />
+                      <span>Sign Up</span>
+                    </Link>
+                  </li>
+                </>
+              )}
+            </ul>
+          </div>
+        )}
       </nav>
-      <div
-        className={`${open ? "block" : "hidden"} md:hidden w-full md:w-auto"`}
-      >
-        <ul className="text-xl flex flex-col font-medium p-4 mt-4 border border-gray-100 rounded-lg bg-gray-900  rtl:space-x-reverse ">
-          {paths.map((path, index) => (
-            <li key={index}>
-              <Link
-                href={path[0]}
-                className={`block py-2 mb-2 px-3  hover:text-black  rounded hover:bg-gray-100 transition-all duration-[300ms] ease-in ${
-                  router.pathname === path[0]
-                    ? " bg-gray-100 text-black transition-all duration-[300ms] ease-in"
-                    : "text-white"
-                }`}
-              >
-                {path[1]}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
     </header>
   );
 };

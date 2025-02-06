@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 export default function QuizPage({ params }) {
-  const { subjectId, week, id} = params;
+  const { subjectId, week, id } = params;
   const [questions, setQuestions] = useState([]);
   const [error, setError] = useState(null);
   const [answers, setAnswers] = useState({});
@@ -73,169 +74,155 @@ export default function QuizPage({ params }) {
   const renderQuizContent = () => {
     if (quizSubmitted) {
       return (
-        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <h2
-            style={{
-              textAlign: "center",
-              color: "#007bff",
-              marginBottom: "20px",
-            }}
-          >
-            Quiz Results
-          </h2>
-          <p
-            style={{
-              textAlign: "center",
-              fontSize: "18px",
-              marginBottom: "20px",
-            }}
-          >
-            Your score: {quizResults.score.toFixed(2)}%
-          </p>
-          {questions.map((question) => (
-            <div
-              key={question.questionId}
-              style={{
-                marginBottom: "20px",
-                padding: "15px",
-                border: "1px solid #ccc",
-                borderRadius: "10px",
-                backgroundColor: "#f9f9f9",
-                boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-              }}
+        <div className="space-y-8">
+          <div className="text-center">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              className="inline-block bg-blue-100 p-6 rounded-full"
             >
-              <h3
-                style={{
-                  fontSize: "18px",
-                  marginBottom: "10px",
-                  color: "#333",
-                }}
-              >
-                {question.questionText}
-              </h3>
-              <p style={{ fontSize: "16px", color: "#555" }}>
-                Your answer: {answers[question.questionId] || "Not answered"}
-              </p>
-              <p
-                style={{
-                  fontSize: "16px",
-                  color:
-                    quizResults.correctAnswers[question.questionId] ===
-                    answers[question.questionId]
-                      ? "green"
-                      : "red",
-                }}
-              >
-                Correct answer:{" "}
-                {quizResults.correctAnswers[question.questionId]}
-              </p>
-            </div>
-          ))}
+              <span className="text-4xl font-bold text-blue-600">
+                {quizResults.score.toFixed(2)}%
+              </span>
+            </motion.div>
+            <p className="mt-4 text-gray-600">Your Overall Score</p>
+          </div>
+
+          <div className="space-y-6">
+            {questions.map((question) => {
+              const isCorrect =
+                quizResults.correctAnswers[question.questionId] ===
+                answers[question.questionId];
+              return (
+                <motion.div
+                  key={question.questionId}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-white p-6 rounded-xl shadow-sm border border-gray-100"
+                >
+                  <div className="flex items-start gap-4">
+                    <div
+                      className={`flex-shrink-0 mt-1 ${
+                        isCorrect ? "text-green-500" : "text-red-500"
+                      }`}
+                    >
+                      {isCorrect ? (
+                        <FiCheckCircle size={24} />
+                      ) : (
+                        <FiXCircle size={24} />
+                      )}
+                    </div>
+                    <div className="flex-grow">
+                      <h3 className="text-lg font-medium text-gray-900">
+                        {question.questionText}
+                      </h3>
+                      <div className="mt-3 space-y-2">
+                        <p
+                          className={`text-sm ${
+                            isCorrect ? "text-green-600" : "text-red-600"
+                          }`}
+                        >
+                          Your answer:{" "}
+                          {answers[question.questionId] || "Not answered"}
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          Correct answer:{" "}
+                          {quizResults.correctAnswers[question.questionId]}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       );
     }
 
     return (
-      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-        {questions.map((question) => (
-          <div
-            key={question.questionId}
-            style={{
-              marginBottom: "20px",
-              padding: "15px",
-              border: "1px solid #ccc",
-              borderRadius: "10px",
-              backgroundColor: "#f9f9f9",
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <h2
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-                color: "#333",
-              }}
+      <div className="space-y-8">
+        <div className="space-y-6">
+          {questions.map((question, index) => (
+            <motion.div
+              key={question.questionId}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-white p-6 rounded-xl shadow-sm border border-gray-100"
             >
-              {question.questionText}
-            </h2>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-              }}
-            >
-              {question.options.map((option, index) => (
-                <label
-                  key={index}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    cursor: "pointer",
-                  }}
-                >
-                  <input
-                    type="radio"
-                    name={`question-${question.questionId}`}
-                    value={option}
-                    onChange={() =>
-                      handleOptionChange(question.questionId, option)
-                    }
-                    style={{
-                      width: "18px",
-                      height: "18px",
-                      accentColor: "#007bff",
-                    }}
-                  />
-                  <span style={{ fontSize: "16px", color: "#555" }}>
-                    {option}
-                  </span>
-                </label>
-              ))}
-            </div>
-          </div>
-        ))}
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
+              <div className="flex items-baseline gap-2 mb-4">
+                <span className="text-blue-600 font-medium">#{index + 1}</span>
+                <h3 className="text-lg font-medium text-gray-900">
+                  {question.questionText}
+                </h3>
+              </div>
+              <div className="space-y-3">
+                {question.options.map((option) => (
+                  <label
+                    key={option}
+                    className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-colors ${
+                      answers[question.questionId] === option
+                        ? "bg-blue-50 border border-blue-200"
+                        : "hover:bg-gray-50"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name={`question-${question.questionId}`}
+                      value={option}
+                      onChange={() =>
+                        handleOptionChange(question.questionId, option)
+                      }
+                      className="w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500"
+                    />
+                    <span className="text-gray-700">{option}</span>
+                  </label>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center"
+        >
           <button
             onClick={handleSubmit}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#007bff",
-              color: "#fff",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-              fontSize: "16px",
-            }}
+            className="inline-flex items-center px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-all duration-200 transform hover:scale-105"
           >
             Submit Quiz
           </button>
-        </div>
+        </motion.div>
       </div>
     );
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1
-        style={{
-          textAlign: "center",
-          color: "#007bff",
-          fontWeight: "bold",
-          fontSize: "32px",
-        }}
+    <div className="max-w-3xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="text-center mb-12"
       >
-        Quiz for {`Subject ${subjectId}, Week ${week}`}
-      </h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          {`Subject ${subjectId} • Week ${week}`}
+        </h1>
+        <div className="flex justify-center items-center gap-2 text-gray-600">
+          <span className="h-2 w-2 bg-gray-400 rounded-full"></span>
+          <span>{questions.length} Questions</span>
+        </div>
+      </motion.div>
+
       {error ? (
-        <p style={{ color: "red", textAlign: "center" }}>Error: {error}</p>
+        <div className="text-center py-12 text-red-600">{error}</div>
       ) : questions.length > 0 ? (
         renderQuizContent()
       ) : (
-        <p style={{ textAlign: "center", color: "#555" }}>
-          Loading questions...
-        </p>
+        <div className="text-center py-12 text-gray-500">
+          <div className="animate-pulse">Loading questions...</div>
+        </div>
       )}
     </div>
   );
