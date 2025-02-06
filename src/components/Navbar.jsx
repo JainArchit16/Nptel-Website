@@ -15,7 +15,7 @@ const Navbar = () => {
   let [open, setOpen] = useState(false);
   const router = useRouter();
   const paths = [
-    ["/home", "Home"],
+    ["/", "Home"],
     ["/quiz", "Quiz"],
     ["/dashboard/uploadPdf", "Questions"],
   ];
@@ -63,7 +63,7 @@ const Navbar = () => {
         <div className="flex md:flex-row md:pb-0 md:items-center md:justify-center gap-3 transition-all duration-500 ease-in list-none w-[30%]">
           {loggedIn ? (
             <div className="w-full">
-              <div className="flex flex-row gap-6 items-center w-full justify-end">
+              <div className="flex flex-row gap-6 items-center w-full justify-end my-4">
                 <ProfileDropDown />
               </div>
             </div>

@@ -8,6 +8,7 @@ export async function middleware(request) {
   // Define paths for login, signup, and dashboard
   const loginPath = "/login";
   const signupPath = "/signup";
+  const quizPath = "/quiz";
   const dashboardPath = "/dashboard";
 
   // Check if user is authenticated
@@ -21,7 +22,10 @@ export async function middleware(request) {
     }
   } else {
     // If not authenticated, restrict access to dashboard
-    if (request.nextUrl.pathname === dashboardPath) {
+    if (
+      request.nextUrl.pathname === dashboardPath ||
+      request.nextUrl.pathname === quizPath
+    ) {
       return NextResponse.redirect(new URL(loginPath, request.url));
     }
   }
@@ -31,5 +35,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/login", "/signup", "/dashboard"], // Specify protected routes
+  matcher: ["/login", "/signup", "/dashboard", "/quiz"], // Specify protected routes
 };
