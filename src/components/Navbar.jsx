@@ -28,7 +28,7 @@ const Navbar = () => {
   let loggedIn = session?.user;
 
   return (
-    <header className="w-full shadow-md bg-gradient-to-r to-white via-red-100 from-red-200">
+    <header className="w-full shadow-md bg-gradient-to-b to-white via-red-100 from-red-200">
       <nav
         className={`flex flex-wrap justify-between items-center w-[98%] mx-auto`}
       >
@@ -47,9 +47,9 @@ const Navbar = () => {
               <li key={index}>
                 <Link
                   href={path[0]}
-                  className={`block py-2 mb-2 px-3 text-gray-800  hover:text-white hover:bg-red-600 hover:rounded-2xl  transition-all duration-[300ms] ease-in ${
+                  className={`block py-2 mb-2 px-3 text-gray-800  hover:text-white hover:bg-red-400 hover:rounded-2xl  transition-all duration-[300ms] ease-in ${
                     router.pathname === path[0]
-                      ? "bg-red-600   text-white rounded-2xl transition-all duration-[300ms] ease-in"
+                      ? "bg-red-400   text-white rounded-2xl transition-all duration-[300ms] ease-in"
                       : ""
                   }`}
                 >
