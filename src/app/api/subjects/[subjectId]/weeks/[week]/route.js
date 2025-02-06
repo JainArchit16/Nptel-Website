@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server"
-import { PrismaClient } from "@prisma/client"
+import { NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export async function GET(request, { params }) {
-  const { subjectId, week } = params
-  console.log("Subject ID:", subjectId, "Week:", week)
+  const { subjectId, week } = await params;
+  console.log("Subject ID:", subjectId, "Week:", week);
 
   try {
     const questions = await prisma.question.findMany({
@@ -18,12 +18,14 @@ export async function GET(request, { params }) {
         questionText: true,
         options: true,
       },
-    })
+    });
 
-    return NextResponse.json(questions)
+    return NextResponse.json(questions);
   } catch (error) {
-    console.error("Error fetching questions:", error)
-    return NextResponse.json({ error: "Error fetching questions" }, { status: 500 })
+    console.error("Error fetching questions:", error);
+    return NextResponse.json(
+      { error: "Error fetching questions" },
+      { status: 500 }
+    );
   }
 }
-
