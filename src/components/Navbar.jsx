@@ -17,6 +17,7 @@ const Navbar = () => {
     { path: "/", name: "Home" },
     { path: "/quiz", name: "Quiz" },
     { path: "/dashboard/uploadPdf", name: "Questions" },
+    { path: "/mocktest", name: "Mock Test" },
   ];
 
   const loggedIn = session?.user;

@@ -186,7 +186,7 @@ export default function LoginPage() {
             </h2>
             <div className="w-20 border-2 rounded-xl mb-5"></div>
             <p className=" text-xl md:mb-20 mb-10 text-white text-center">
-              Start your journey with NCC in one click
+              Start your journey with us in one click
             </p>
             <Link
               href="/signup"
