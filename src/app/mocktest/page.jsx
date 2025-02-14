@@ -1,11 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiClock, FiCheckCircle, FiXCircle } from "react-icons/fi";
 import toast from "react-hot-toast";
 
 export default function MockTest() {
+  // State variables
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
   const [subjects, setSubjects] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [questionCount, setQuestionCount] = useState(10);
@@ -15,6 +19,7 @@ export default function MockTest() {
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [step, setStep] = useState(1);
+  const [quizResults, setQuizResults] = useState(null);
 
   // Animation variants for transitions
   const pageVariants = {
@@ -23,7 +28,7 @@ export default function MockTest() {
     exit: { opacity: 0, y: -20 },
   };
 
-  // Fetch subjects on mount
+  // Fetch available subjects on mount
   useEffect(() => {
     fetch("/api/subjects")
       .then((res) => res.json())
@@ -31,7 +36,7 @@ export default function MockTest() {
       .catch(console.error);
   }, []);
 
-  // Timer effect: countdown only during the quiz (step 3)
+  // Timer effect for the quiz (step 3)
   useEffect(() => {
     if (step === 3 && !submitted && selectedDuration && timeLeft > 0) {
       const timer = setInterval(() => {
@@ -45,7 +50,7 @@ export default function MockTest() {
     }
   }, [step, submitted, selectedDuration, timeLeft]);
 
-  // Format seconds to mm:ss
+  // Format seconds as mm:ss
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -53,7 +58,6 @@ export default function MockTest() {
   };
 
   // Fetch questions from the API using the selected subject and question count.
-  // (Your API should return a randomized set of questions.)
   const fetchQuestions = async () => {
     if (!selectedSubject) return;
     try {
@@ -67,7 +71,7 @@ export default function MockTest() {
     }
   };
 
-  // When the user selects a duration, set the timer and fetch questions, then proceed to the quiz.
+  // When a duration is selected, set the timer, fetch questions, and move to the quiz interface.
   const startQuiz = async (duration) => {
     setSelectedDuration(duration);
     setTimeLeft(duration * 60);
@@ -75,7 +79,7 @@ export default function MockTest() {
     setStep(3);
   };
 
-  // Record the answer for a question.
+  // Record the answer for a given question.
   const handleAnswerChange = (questionId, selectedOption) => {
     setAnswers((prev) => ({
       ...prev,
@@ -83,14 +87,48 @@ export default function MockTest() {
     }));
   };
 
-  // On submission, mark the quiz as submitted and move to results.
+  // Submit the quiz via our API which stores the quiz record and its user answers.
+  const submitQuiz = async () => {
+    try {
+      const res = await fetch("/api/mock", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          subjectId: selectedSubject, // Using the declared selectedSubject
+          week: 0, // Week 0 for mock tests
+          answers: Object.entries(answers).map(([questionId, selectedOption]) => ({
+            questionId: Number(questionId),
+            selectedOption,
+          })),
+          userId:userId, // Dummy user ID; replace with your session user id
+        }),
+      })
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`)
+      }
+
+      const data = await res.json()
+      setQuizResults(data)
+    } catch (error) {
+      console.error("Error submitting quiz:", error)
+      toast.error("Error submitting quiz. Please try again.")
+    }
+  }
+
+  // On submission, mark the quiz as submitted, call submitQuiz, and move to the results step.
   const handleSubmit = () => {
     setSubmitted(true);
     setStep(4);
+    submitQuiz();
   };
 
-  // Calculate quiz score (percentage of correct answers)
+  // Calculate the score locally as a fallback (or before quizResults is available).
+  // If quizResults.score exists, it will be used instead.
   const calculateScore = () => {
+    if (quizResults && quizResults.score !== undefined) {
+      return quizResults.score.toFixed(2);
+    }
     let correct = 0;
     questions.forEach((q) => {
       if (answers[q.questionId] === q.options[q.correctOption]) {
@@ -214,11 +252,7 @@ export default function MockTest() {
                   <span className="font-medium">{formatTime(timeLeft)}</span>
                 </div>
                 <h1 className="text-xl font-bold text-gray-800">
-                  {
-                    subjects.find(
-                      (s) => s.subjectId === selectedSubject
-                    )?.name
-                  }
+                  {subjects.find((s) => s.subjectId === selectedSubject)?.name}
                 </h1>
               </div>
               <div className="space-y-6">
@@ -234,7 +268,6 @@ export default function MockTest() {
                         #{index + 1}
                       </span>
                       <h3 className="text-lg font-medium text-gray-900">
-                        {/* Remove the first 3 characters from the question text */}
                         {q.questionText.slice(3)}
                       </h3>
                     </div>
@@ -276,7 +309,7 @@ export default function MockTest() {
           )}
 
           {/* Step 4: Results */}
-          {step === 4 && submitted && (
+          {step === 4 && submitted && quizResults && (
             <motion.div
               key="results"
               variants={pageVariants}

@@ -58,7 +58,7 @@ export async function POST(request) {
         subjectId,
         week,
         score: scorePercentage,
-        accuracy: score / totalQuestions,
+        accuracy: parseFloat(((score / totalQuestions)*100).toFixed(2)),
       },
     })
 
