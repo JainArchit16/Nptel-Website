@@ -62,7 +62,7 @@ export async function POST(req) {
         subjectId,
         week, // for mock test, this will be 0
         score: scorePercentage,
-        accuracy: parseFloat(((score / totalQuestions)*100).toFixed(2)),
+        accuracy: parseFloat(((scorePercentage / totalQuestions)*100).toFixed(2)),
         userAnswers: {
           create: userAnswersData,
         },

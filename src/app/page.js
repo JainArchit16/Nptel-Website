@@ -103,7 +103,7 @@ export default function Home() {
         {/* Footer */}
         <footer className="p-6 backdrop-blur-lg border-t border-white/10 mt-auto">
           <div className="max-w-7xl mx-auto text-center text-sm text-gray-400">
-            © 2025 QuizNPTEL. All rights reserved.
+            © 2025 NPTEL Hub. All rights reserved.
           </div>
         </footer>
       </div>
