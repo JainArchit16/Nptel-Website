@@ -1,125 +1,11 @@
-// "use client";
-// import { useState, useEffect } from "react";
-// import { useSession } from "next-auth/react";
-// import QuizPage from "./quizpage";
-// import { motion } from "framer-motion";
-
-// export default function SubjectWeekSelector() {
-//   const { data: session } = useSession();
-//   const id = session?.user?.id;
-//   console.log(id);
-//   const [subjects, setSubjects] = useState([]);
-//   const [selectedSubject, setSelectedSubject] = useState(null);
-//   const [selectedWeek, setSelectedWeek] = useState(null);
-
-//   // Fetch subjects
-//   useEffect(() => {
-//     fetch("/api/subjects")
-//       .then((res) => res.json())
-//       .then((data) => setSubjects(data))
-//       .catch((error) => console.error("Error fetching subjects:", error));
-//   }, []);
-
-//   const handleSubjectChange = (subjectId) => {
-//     setSelectedSubject(subjectId);
-//     setSelectedWeek(null); // Reset week selection
-//   };
-
-//   const handleWeekChange = (week) => {
-//     setSelectedWeek(week);
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
-//       <motion.div
-//         initial={{ opacity: 0, y: 20 }}
-//         animate={{ opacity: 1, y: 0 }}
-//         className="max-w-4xl mx-auto"
-//       >
-//         <h1 className="text-4xl font-bold text-center text-gray-900 mb-8">
-//           Choose Your Quiz
-//           <span className="block mt-2 text-lg font-normal text-gray-600">
-//             Select a subject and week to begin
-//           </span>
-//         </h1>
-
-//         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
-//           <h2 className="text-xl font-semibold text-gray-800 mb-6">Subjects</h2>
-//           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-//             {subjects.map((subject) => (
-//               <motion.button
-//                 key={subject.subjectId}
-//                 whileHover={{ scale: 1.05 }}
-//                 whileTap={{ scale: 0.95 }}
-//                 onClick={() => handleSubjectChange(subject.subjectId)}
-//                 className={`p-4 rounded-xl transition-all ${
-//                   selectedSubject === subject.subjectId
-//                     ? "bg-blue-600 text-white shadow-lg"
-//                     : "bg-gray-100 hover:bg-gray-200 text-gray-800"
-//                 }`}
-//               >
-//                 <span className="font-medium">{subject.name}</span>
-//               </motion.button>
-//             ))}
-//           </div>
-//         </div>
-
-//         {selectedSubject && (
-//           <motion.div
-//             initial={{ opacity: 0 }}
-//             animate={{ opacity: 1 }}
-//             className="bg-white rounded-2xl shadow-lg p-6"
-//           >
-//             <h2 className="text-xl font-semibold text-gray-800 mb-6">Weeks</h2>
-//             <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
-//               {[...Array(12).keys()].map((week) => (
-//                 <motion.button
-//                   key={week + 1}
-//                   whileHover={{ scale: 1.05 }}
-//                   whileTap={{ scale: 0.95 }}
-//                   onClick={() => handleWeekChange(week + 1)}
-//                   className={`p-3 rounded-lg transition-all ${
-//                     selectedWeek === week + 1
-//                       ? "bg-blue-600 text-white shadow-lg"
-//                       : "bg-gray-100 hover:bg-gray-200 text-gray-800"
-//                   }`}
-//                 >
-//                   Week {week + 1}
-//                 </motion.button>
-//               ))}
-//             </div>
-//           </motion.div>
-//         )}
-
-//         <div className="mt-12">
-//           {selectedSubject && selectedWeek ? (
-//             <QuizPage
-//               params={{ subjectId: selectedSubject, week: selectedWeek, id }}
-//             />
-//           ) : (
-//             <p className="text-center text-gray-500">
-//               {selectedSubject
-//                 ? "Select a week to start the quiz"
-//                 : "Choose a subject to continue"}
-//             </p>
-//           )}
-//         </div>
-//       </motion.div>
-//     </div>
-//   );
-// }
-
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
-import {
-  FiClock,
-  FiCheckCircle,
-  FiXCircle,
-  FiAlertTriangle,
-} from "react-icons/fi";
+import { FiClock, FiCheckCircle, FiXCircle } from "react-icons/fi";
 import toast from "react-hot-toast";
+import { FiBookmark } from "react-icons/fi";
+import { FaBookmark } from "react-icons/fa";
 
 export default function QuizFlow() {
   const { data: session } = useSession();
@@ -133,6 +19,23 @@ export default function QuizFlow() {
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [quizResults, setQuizResults] = useState(null);
   const [timeLeft, setTimeLeft] = useState(null);
+  const [bookmarked, setBookmarked] = useState({});
+
+  useEffect(() => {
+    if (userId) {
+      fetch(`/api/bookmarks?userId=${userId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          // Assume the API returns an array of question IDs that are bookmarked
+          const bookmarkMap = data.reduce((acc, bookmark) => {
+            acc[bookmark.questionId] = true;
+            return acc;
+          }, {});
+          setBookmarked(bookmarkMap);
+        })
+        .catch(console.error);
+    }
+  }, [userId]);
 
   // Animation variants
   const pageVariants = {
@@ -172,6 +75,40 @@ export default function QuizFlow() {
       handleSubmit();
     }
   }, [quizSubmitted, timeLeft, selectedDuration]);
+
+  const handleBookmark = async (questionId) => {
+    // Check if the question is currently bookmarked
+    const isBookmarked = bookmarked[questionId];
+
+    try {
+      if (isBookmarked) {
+        // Remove bookmark: assuming DELETE method on /api/bookmark accepts JSON body with userId and questionId
+        const res = await fetch("/api/bookmark", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId, questionId }),
+        });
+        if (res.ok) {
+          setBookmarked((prev) => ({ ...prev, [questionId]: false }));
+          toast.success("Bookmark removed");
+        }
+      } else {
+        // Add bookmark: using POST method
+        const res = await fetch("/api/bookmark", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId, questionId }),
+        });
+        if (res.ok) {
+          setBookmarked((prev) => ({ ...prev, [questionId]: true }));
+          toast.success("Bookmark added");
+        }
+      }
+    } catch (error) {
+      console.error("Bookmark operation failed:", error);
+      toast.error("Failed to update bookmark");
+    }
+  };
 
   const handleSubmit = async () => {
     try {
@@ -349,13 +286,25 @@ export default function QuizFlow() {
                     animate={{ opacity: 1, y: 0 }}
                     className="bg-white p-6 rounded-xl shadow-sm border border-gray-100"
                   >
-                    <div className="flex items-baseline gap-2 mb-4">
-                      <span className="text-blue-600 font-medium">
-                        #{index + 1}
-                      </span>
-                      <h3 className="text-lg font-medium text-gray-900">
-                        {question.questionText}
-                      </h3>
+                    <div className="flex items-baseline justify-between mb-4">
+                      <div className="flex items-center gap-2">
+                        <span className="text-blue-600 font-medium">
+                          #{index + 1}
+                        </span>
+                        <h3 className="text-lg font-medium text-gray-900">
+                          {question.questionText}
+                        </h3>
+                      </div>
+                      <button
+                        onClick={() => handleBookmark(question.questionId)}
+                        className="text-xl text-gray-600 hover:text-blue-600"
+                      >
+                        {bookmarked[question.questionId] ? (
+                          <FaBookmark />
+                        ) : (
+                          <FiBookmark />
+                        )}
+                      </button>
                     </div>
                     <div className="space-y-3">
                       {question.options.map((option) => (
