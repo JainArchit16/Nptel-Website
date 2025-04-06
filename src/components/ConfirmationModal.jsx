@@ -1,14 +1,20 @@
-// ConfirmationModal.js
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
-//Not By Me
 const ConfirmationModal = ({ modalData }) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || !modalData) return null;
+
   const { text1, text2, btn1Text, btn2Text, btn1Handler, btn2Handler } =
     modalData;
 
-  return (
-    <div className="fixed inset-0 flex flex-col gap-8 items-center justify-center z-50 backdrop-blur-sm">
-      {/* Apply backdrop-filter for blur effect */}
+  const modalContent = (
+    <div className="fixed inset-0 flex flex-col gap-8 items-center justify-center z-[2000] backdrop-blur-sm bg-black/40">
       <div className="md:w-[25%] p-4 rounded-lg shadow-lg flex flex-col gap-2 bg-red-500">
         <p className="text-xl text-white font-semibold">{text1}</p>
         <p className="text-white text-sm">{text2}</p>
@@ -29,6 +35,8 @@ const ConfirmationModal = ({ modalData }) => {
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.getElementById("modal-root"));
 };
 
 export default ConfirmationModal;
