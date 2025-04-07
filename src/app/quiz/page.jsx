@@ -292,7 +292,7 @@ export default function QuizFlow() {
                           #{index + 1}
                         </span>
                         <h3 className="text-lg font-medium text-gray-900">
-                          {question.questionText}
+                          {question.questionText.substring(12)}
                         </h3>
                       </div>
                       <button
@@ -395,7 +395,7 @@ export default function QuizFlow() {
                         </div>
                         <div className="flex-grow">
                           <h3 className="text-lg font-medium text-gray-900">
-                            {question.questionText}
+                            {question.questionText.substring(12)}
                           </h3>
                           <div className="mt-3 space-y-2">
                             <p

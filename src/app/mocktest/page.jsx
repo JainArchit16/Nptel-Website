@@ -268,7 +268,7 @@ export default function MockTest() {
                         #{index + 1}
                       </span>
                       <h3 className="text-lg font-medium text-gray-900">
-                        {q.questionText.slice(3)}
+                        {q.questionText.slice(12)}
                       </h3>
                     </div>
                     <div className="space-y-3">

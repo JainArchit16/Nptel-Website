@@ -114,7 +114,7 @@ export default function QuizPage({ params }) {
                     </div>
                     <div className="flex-grow">
                       <h3 className="text-lg font-medium text-gray-900">
-                        {question.questionText}
+                        {question.questionText.substring(10)}
                       </h3>
                       <div className="mt-3 space-y-2">
                         <p
@@ -153,7 +153,7 @@ export default function QuizPage({ params }) {
               <div className="flex items-baseline gap-2 mb-4">
                 <span className="text-blue-600 font-medium">#{index + 1}</span>
                 <h3 className="text-lg font-medium text-gray-900">
-                  {question.questionText}
+                  {question.questionText.substring(10)}
                 </h3>
               </div>
               <div className="space-y-3">
