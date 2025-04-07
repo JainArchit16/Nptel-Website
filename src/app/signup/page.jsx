@@ -1,291 +1,365 @@
-"use client"; // Mark this component as a client component
+"use client";
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
 import { useForm } from "react-hook-form";
-
 import toast from "react-hot-toast";
-import { SiGnuprivacyguard } from "react-icons/si";
-
-import { MdOutlineMail } from "react-icons/md";
-import { BiSolidHide, BiSolidShow, BiSolidUserDetail } from "react-icons/bi";
-import { HiIdentification } from "react-icons/hi2";
 import Link from "next/link";
-
-import "./signup.css"; // Import the CSS module
-
-// import image1 from "/assests/login/login.jpeg";
+import {
+  Mail,
+  Eye,
+  EyeOff,
+  User,
+  Lock,
+  ArrowRight,
+  UserPlus,
+} from "lucide-react";
 
 export default function SignupPage() {
   const router = useRouter();
-  const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [focusedField, setFocusedField] = useState(null);
 
-  const [email, setEmail] = useState(false);
-  const [pass, setPass] = useState(false);
-  const [show, setShow] = useState(false);
-  const [showC, setShowC] = useState(false);
-  const [click, setClick] = useState(false);
-  const [clickC, setClickC] = useState(false);
-  // const [fname, setfName] = useState("");
-  const [name, setName] = useState("");
-  const [confPass, setConfPass] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    // fname: "",
-    name: "",
-  });
   const {
     register,
     handleSubmit,
     getValues,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    console.log("ds");
-  };
 
   async function onSubmit(data) {
     const { email, password, name, confirmPassword } = data;
-    const toastId = toast.loading("Loading");
+    const toastId = toast.loading("Creating your account...");
     const formData = new FormData();
     formData.append("email", email);
     formData.append("username", name);
     formData.append("password", password);
     formData.append("confirmPassword", confirmPassword);
+
     try {
       const response = await fetch(`/api/signup`, {
         method: "POST",
         body: formData,
       });
-      console.log(response);
-      const data = await response.json();
+
+      const responseData = await response.json();
       toast.dismiss(toastId);
-      if (data.success) {
-        toast.success(data.message);
+
+      if (responseData.success) {
+        toast.success(responseData.message);
         router.push("/login");
       } else {
-        toast.error(data.message);
+        toast.error(responseData.message);
       }
     } catch (error) {
       toast.dismiss(toastId);
-      toast.error(`Signup failed ${email}: ${error.message}`);
-      console.log(error.message);
+      toast.error(`Signup failed: ${error.message}`);
+      console.error(error.message);
     }
   }
 
+  const isFieldActive = (fieldName) => {
+    return focusedField === fieldName || !!getValues(fieldName);
+  };
+
   return (
-    <>
-      <div className="min-h-screen flex flex-col justify-center items-center bg-slate-100 transition-all ease-in duration-500">
-        <div className="w-[90%] md:w-4/5 lg:w-3/5 xl:w-2/3 flex flex-col md:flex-row bg-white rounded-2xl shadow-2xl overflow-hidden">
-          <div className="hidden md:flex md:w-1/2 relative">
-            <img
-              src="/assests/login/login.jpeg"
-              className="w-full h-full object-cover opacity-70"
-              alt="Signup"
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-20 flex flex-col items-center justify-center p-5">
-              <h2 className="text-5xl font-bold text-[#00308F] text-center mb-2">
-                Already have an Account?
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4">
+      <div className="w-full max-w-5xl flex flex-col md:flex-row rounded-3xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)]">
+        {/* Left side - Image and CTA */}
+        <div className="hidden md:block md:w-1/2 relative bg-gradient-to-br from-sky-900 to-indigo-900">
+          <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]"></div>
+          <img
+            src="/assests/login/login.jpeg"
+            className="w-full h-full object-cover mix-blend-overlay opacity-80"
+            alt="Signup background"
+          />
+          <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-white">
+            <div className="max-w-md text-center">
+              <h2 className="text-4xl font-bold mb-6 tracking-tight">
+                Welcome Back
               </h2>
-              <div className="w-20 border-2 rounded-xl mb-5"></div>
-              <p className="text-white text-xl mb-20 text-center">
-                Start your journey with us in one click
+              <div className="w-16 h-1 bg-white/70 mx-auto rounded-full mb-6"></div>
+              <p className="text-lg mb-10 text-white/90">
+                Already have an account? Sign in to continue your journey with
+                us.
               </p>
               <Link
                 href="/login"
-                className="border-white border-2 p-1 px-2 rounded-full text-white hover:text-gray-500"
+                className="group flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 backdrop-blur-sm py-3 px-6 rounded-lg transition-all duration-300 text-white"
               >
-                Log In
+                <span>Sign In</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>
-          <div className="w-full md:w-1/2 flex flex-col items-center p-5">
-            <h2 className="text-3xl font-bold mt-5 text-[#00308F]">
-              Sign Up To Continue
-            </h2>
+        </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="w-full mt-10">
-              <div className="mb-4">
+        {/* Right side - Form */}
+        <div className="w-full md:w-1/2 bg-white p-8 md:p-12">
+          <div className="max-w-md mx-auto">
+            <div className="text-center mb-10">
+              <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                Create Account
+              </h1>
+              <p className="text-gray-500">
+                Join our community and start your journey
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              {/* Email Field */}
+              <div className="relative">
                 <div
-                  className="flex items-center border-b-2 relative mb-1"
-                  onFocus={() => setEmail(true)}
+                  className={`group border-2 rounded-lg px-4 py-3 transition-all duration-300 ${
+                    errors.email
+                      ? "border-red-300 bg-red-50"
+                      : isFieldActive("email")
+                      ? "border-sky-500 bg-sky-50/50"
+                      : "border-gray-200 hover:border-gray-300"
+                  }`}
                 >
                   <label
                     htmlFor="email"
-                    className={`absolute left-2 transition-all ${
-                      email ? "top-[-10px] text-sm" : "top-1 text-xl"
+                    className={`absolute transition-all duration-200 ${
+                      isFieldActive("email")
+                        ? "-top-2.5 left-3 text-xs bg-white px-1 text-sky-600"
+                        : "top-3 left-10 text-gray-500"
                     }`}
                   >
-                    Email
+                    Email Address
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="outline-none w-full text-black"
-                    onChange={handleChange}
-                    onBlurCapture={(e) => {
-                      e.target.value.length > 0 ? "" : setEmail(false);
-                    }}
-                    {...register("email")}
-                  />
-                  <MdOutlineMail className="text-2xl" />
+                  <div className="flex items-center gap-3">
+                    <Mail
+                      className={`w-5 h-5 ${
+                        isFieldActive("email")
+                          ? "text-sky-500"
+                          : "text-gray-400"
+                      }`}
+                    />
+                    <input
+                      type="email"
+                      id="email"
+                      className="outline-none w-full bg-transparent"
+                      {...register("email", {
+                        required: "Email is required",
+                        pattern: {
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                          message: "Invalid email address",
+                        },
+                      })}
+                      onFocus={() => setFocusedField("email")}
+                      onBlur={() => setFocusedField(null)}
+                    />
+                  </div>
                 </div>
                 {errors.email && (
-                  <span className="text-red-500">{errors.email.message}</span>
+                  <p className="mt-1 text-sm text-red-500 flex items-center gap-1">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
 
-              <div className="mb-4">
+              {/* Full Name Field */}
+              <div className="relative">
                 <div
-                  className="flex items-center border-b-2 relative mb-1"
-                  onFocus={() => setName(true)}
+                  className={`group border-2 rounded-lg px-4 py-3 transition-all duration-300 ${
+                    errors.name
+                      ? "border-red-300 bg-red-50"
+                      : isFieldActive("name")
+                      ? "border-sky-500 bg-sky-50/50"
+                      : "border-gray-200 hover:border-gray-300"
+                  }`}
                 >
                   <label
-                    htmlFor="lname"
-                    className={`absolute left-2 transition-all ${
-                      name ? "top-[-10px] text-sm" : "top-1 text-xl"
+                    htmlFor="name"
+                    className={`absolute transition-all duration-200 ${
+                      isFieldActive("name")
+                        ? "-top-2.5 left-3 text-xs bg-white px-1 text-sky-600"
+                        : "top-3 left-10 text-gray-500"
                     }`}
                   >
                     Full Name
                   </label>
-                  <input
-                    type="text"
-                    id="lname"
-                    className="outline-none w-full"
-                    onChange={handleChange}
-                    onBlurCapture={(e) => {
-                      e.target.value.length > 0 ? "" : setName(false);
-                    }}
-                    {...register("name", { required: false })}
-                  />
-                  <HiIdentification className="text-2xl" />
+                  <div className="flex items-center gap-3">
+                    <User
+                      className={`w-5 h-5 ${
+                        isFieldActive("name") ? "text-sky-500" : "text-gray-400"
+                      }`}
+                    />
+                    <input
+                      type="text"
+                      id="name"
+                      className="outline-none w-full bg-transparent"
+                      {...register("name", {
+                        required: "Full name is required",
+                      })}
+                      onFocus={() => setFocusedField("name")}
+                      onBlur={() => setFocusedField(null)}
+                    />
+                  </div>
                 </div>
                 {errors.name && (
-                  <span className="text-red-500">{errors.name.message}</span>
+                  <p className="mt-1 text-sm text-red-500 flex items-center gap-1">
+                    {errors.name.message}
+                  </p>
                 )}
               </div>
-              <div className="mb-4">
-                <div className="flex items-center border-b-2 relative mb-1">
+
+              {/* Password Field */}
+              <div className="relative">
+                <div
+                  className={`group border-2 rounded-lg px-4 py-3 transition-all duration-300 ${
+                    errors.password
+                      ? "border-red-300 bg-red-50"
+                      : isFieldActive("password")
+                      ? "border-sky-500 bg-sky-50/50"
+                      : "border-gray-200 hover:border-gray-300"
+                  }`}
+                >
                   <label
                     htmlFor="password"
-                    className={`absolute left-2 transition-all ${
-                      pass ? "top-[-10px] text-sm" : "top-1 text-xl"
+                    className={`absolute transition-all duration-200 ${
+                      isFieldActive("password")
+                        ? "-top-2.5 left-3 text-xs bg-white px-1 text-sky-600"
+                        : "top-3 left-10 text-gray-500"
                     }`}
                   >
                     Password
                   </label>
-                  <input
-                    type={`${show ? "text" : "password"}`}
-                    id="password"
-                    className="outline-none w-full"
-                    onChange={handleChange}
-                    onFocus={() => setPass(true)}
-                    onBlurCapture={(e) => {
-                      if (e.target.value.length === 0) {
-                        setPass(false);
-                        setClick(false);
-                      }
-                    }}
-                    {...register("password", {
-                      required: "Password is required.",
-                      minLength: {
-                        value: 6,
-                        message: "Password must be at least 6 characters long.",
-                      },
-                    })}
-                  />
-                  {show ? (
-                    <BiSolidShow
-                      className="text-2xl cursor-pointer"
-                      onClick={() => {
-                        setShow(!show);
-                        setClick(true);
-                      }}
+                  <div className="flex items-center gap-3">
+                    <Lock
+                      className={`w-5 h-5 ${
+                        isFieldActive("password")
+                          ? "text-sky-500"
+                          : "text-gray-400"
+                      }`}
                     />
-                  ) : (
-                    <BiSolidHide
-                      className="text-2xl cursor-pointer"
-                      onClick={() => {
-                        setShow(!show);
-                        setClick(true);
-                      }}
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      className="outline-none w-full bg-transparent"
+                      {...register("password", {
+                        required: "Password is required",
+                        minLength: {
+                          value: 6,
+                          message:
+                            "Password must be at least 6 characters long",
+                        },
+                      })}
+                      onFocus={() => setFocusedField("password")}
+                      onBlur={() => setFocusedField(null)}
                     />
-                  )}
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="w-5 h-5" />
+                      ) : (
+                        <Eye className="w-5 h-5" />
+                      )}
+                    </button>
+                  </div>
                 </div>
                 {errors.password && (
-                  <span className="text-red-500">
+                  <p className="mt-1 text-sm text-red-500 flex items-center gap-1">
                     {errors.password.message}
-                  </span>
+                  </p>
                 )}
               </div>
-              <div className="mb-3">
+
+              {/* Confirm Password Field */}
+              <div className="relative">
                 <div
-                  className="flex items-center border-b-2 relative mb-1"
-                  onFocus={() => setConfPass(true)}
+                  className={`group border-2 rounded-lg px-4 py-3 transition-all duration-300 ${
+                    errors.confirmPassword
+                      ? "border-red-300 bg-red-50"
+                      : isFieldActive("confirmPassword")
+                      ? "border-sky-500 bg-sky-50/50"
+                      : "border-gray-200 hover:border-gray-300"
+                  }`}
                 >
                   <label
                     htmlFor="confirmPassword"
-                    className={`absolute left-2 transition-all ${
-                      confPass ? "top-[-10px] text-sm" : "top-1 text-xl"
+                    className={`absolute transition-all duration-200 ${
+                      isFieldActive("confirmPassword")
+                        ? "-top-2.5 left-3 text-xs bg-white px-1 text-sky-600"
+                        : "top-3 left-10 text-gray-500"
                     }`}
                   >
                     Confirm Password
                   </label>
-                  <input
-                    type={`${showC ? "text" : "password"}`}
-                    id="confirmPassword"
-                    className="outline-none w-full"
-                    onChange={handleChange}
-                    onBlurCapture={(e) => {
-                      e.target.value.length > 0 ? "" : setConfPass(false);
-                    }}
-                    {...register("confirmPassword", {
-                      required: "Confirm password is required.",
-                      validate: (value) =>
-                        value === getValues("password") ||
-                        "Passwords do not match.",
-                    })}
-                  />
-                  {showC ? (
-                    <BiSolidShow
-                      className="text-2xl cursor-pointer"
-                      onClick={() => {
-                        setShowC(!showC);
-                        setClickC(true);
-                      }}
+                  <div className="flex items-center gap-3">
+                    <Lock
+                      className={`w-5 h-5 ${
+                        isFieldActive("confirmPassword")
+                          ? "text-sky-500"
+                          : "text-gray-400"
+                      }`}
                     />
-                  ) : (
-                    <BiSolidHide
-                      className="text-2xl cursor-pointer"
-                      onClick={() => {
-                        setShowC(!showC);
-                        setClickC(true);
-                      }}
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      id="confirmPassword"
+                      className="outline-none w-full bg-transparent"
+                      {...register("confirmPassword", {
+                        required: "Please confirm your password",
+                        validate: (value) =>
+                          value === getValues("password") ||
+                          "Passwords do not match",
+                      })}
+                      onFocus={() => setFocusedField("confirmPassword")}
+                      onBlur={() => setFocusedField(null)}
                     />
-                  )}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      {showConfirmPassword ? (
+                        <EyeOff className="w-5 h-5" />
+                      ) : (
+                        <Eye className="w-5 h-5" />
+                      )}
+                    </button>
+                  </div>
                 </div>
                 {errors.confirmPassword && (
-                  <span className="text-red-500">
+                  <p className="mt-1 text-sm text-red-500 flex items-center gap-1">
                     {errors.confirmPassword.message}
-                  </span>
+                  </p>
                 )}
               </div>
+
+              {/* Submit Button */}
               <button
-                className="flex items-center justify-center gap-2 text-xl w-full bg-[#00308F] rounded-2xl hover:text-gray-600 duration-500 transition mb-4 text-white font-semibold mt-3"
                 type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-700 hover:to-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                <SiGnuprivacyguard />
-                Sign Up
+                <UserPlus className="w-5 h-5" />
+                <span>
+                  {isSubmitting ? "Creating Account..." : "Create Account"}
+                </span>
               </button>
+
+              {/* Mobile Login Link */}
+              <div className="text-center md:hidden mt-6">
+                <p className="text-gray-500 mb-2">Already have an account?</p>
+                <Link
+                  href="/login"
+                  className="text-sky-600 hover:text-sky-800 font-medium transition-colors"
+                >
+                  Sign In
+                </Link>
+              </div>
             </form>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
