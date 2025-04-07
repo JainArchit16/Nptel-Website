@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Home",
-  description: "One stop solution for nptel exams",
+  description: "One stop solution for NPTEL exams",
   icons: {
     icon: "/mainLogo.jpg",
   },

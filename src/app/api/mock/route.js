@@ -53,7 +53,7 @@ export async function POST(req) {
     })
 
     const totalQuestions = answers.length
-    const scorePercentage = (correctCount / totalQuestions) * 100
+    const scorePercentage = parseFloat(((correctCount / totalQuestions) * 100).toFixed(2));
 
     // Create the quiz record and the related user answers in one nested write
     const quizRecord = await prisma.quiz.create({
@@ -62,7 +62,7 @@ export async function POST(req) {
         subjectId,
         week, // for mock test, this will be 0
         score: scorePercentage,
-        accuracy: parseFloat(((scorePercentage / totalQuestions)*100).toFixed(2)),
+        accuracy: scorePercentage,
         userAnswers: {
           create: userAnswersData,
         },
