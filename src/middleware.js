@@ -8,6 +8,8 @@ export async function middleware(request) {
   const signupPath = "/signup";
   const dashboardPrefix = "/dashboard";
   const quizPath = "/quiz";
+  const mockPath = "/mocktest";
+  const bookPath = "/bookmark";
 
   const pathname = request.nextUrl.pathname;
 
@@ -18,7 +20,12 @@ export async function middleware(request) {
     }
   } else {
     // If not authenticated, restrict access to dashboard and quiz
-    if (pathname.startsWith(dashboardPrefix) || pathname === quizPath) {
+    if (
+      pathname.startsWith(dashboardPrefix) ||
+      pathname === quizPath ||
+      pathname === mockPath ||
+      pathname === bookPath
+    ) {
       return NextResponse.redirect(new URL(loginPath, request.url));
     }
   }
@@ -27,5 +34,12 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/login", "/signup", "/dashboard/:path*", "/quiz"],
+  matcher: [
+    "/login",
+    "/signup",
+    "/dashboard/:path*",
+    "/quiz",
+    "/mocktest",
+    "/bookmark",
+  ],
 };

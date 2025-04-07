@@ -28,6 +28,7 @@ export default function RootLayout({ children }) {
             {children}
             <Toaster />
           </motion>
+          <div id="modal-root"></div>
         </AuthProvider>
       </body>
     </html>

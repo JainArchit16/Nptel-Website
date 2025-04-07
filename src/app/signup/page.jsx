@@ -85,7 +85,7 @@ export default function SignupPage() {
           <div className="hidden md:flex md:w-1/2 relative">
             <img
               src="/assests/login/login.jpeg"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover opacity-70"
               alt="Signup"
             />
             <div className="absolute inset-0 bg-black bg-opacity-20 flex flex-col items-center justify-center p-5">
