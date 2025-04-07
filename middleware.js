@@ -2,38 +2,30 @@ import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(request) {
-  // Retrieve the session token using getToken
   const session = await getToken({ req: request });
 
-  // Define paths for login, signup, and dashboard
   const loginPath = "/login";
   const signupPath = "/signup";
+  const dashboardPrefix = "/dashboard";
   const quizPath = "/quiz";
-  const dashboardPath = "/dashboard";
 
-  // Check if user is authenticated
+  const pathname = request.nextUrl.pathname;
+
   if (session) {
-    // If authenticated, redirect from login/signup to dashboard
-    if (
-      request.nextUrl.pathname === loginPath ||
-      request.nextUrl.pathname === signupPath
-    ) {
+    // If authenticated, redirect away from login or signup
+    if (pathname === loginPath || pathname === signupPath) {
       return NextResponse.redirect(new URL("/dashboard/profile", request.url));
     }
   } else {
-    // If not authenticated, restrict access to dashboard
-    if (
-      request.nextUrl.pathname === dashboardPath ||
-      request.nextUrl.pathname === quizPath
-    ) {
+    // If not authenticated, restrict access to dashboard and quiz
+    if (pathname.startsWith(dashboardPrefix) || pathname === quizPath) {
       return NextResponse.redirect(new URL(loginPath, request.url));
     }
   }
 
-  // Allow the request to proceed if none of the conditions matched
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/login", "/signup", "/dashboard", "/quiz"], // Specify protected routes
+  matcher: ["/login", "/signup", "/dashboard/:path*", "/quiz"],
 };
