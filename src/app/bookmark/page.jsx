@@ -118,7 +118,7 @@ export default function BookmarksPage() {
 
   if (Object.keys(groupedBookmarks).length === 0) {
     return (
-      <div className="container max-w-5xl mx-auto py-12 px-4">
+      <div className="max-w-5xl mx-auto py-12 px-4">
         <h1 className="text-4xl font-bold mb-12 tracking-tight">
           Your Bookmarks
         </h1>
@@ -130,7 +130,7 @@ export default function BookmarksPage() {
             later.
           </p>
           <Button size="lg" asChild>
-            <a href="/questions">Explore Questions</a>
+            <a href="/quiz">Explore Questions</a>
           </Button>
         </div>
       </div>
