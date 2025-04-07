@@ -11,10 +11,7 @@ export async function POST(request) {
         JSON.stringify({
           message: "Request body must be an array of questions",
         }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
@@ -37,23 +34,29 @@ export async function POST(request) {
       }
     }
 
-    // Process subjects and questions in transaction
-    const result = await prisma.$transaction(async (tx) => {
-      const subjects = [...new Set(questions.map((q) => q.subject))];
+    // Upsert subjects and map to IDs
+    const subjects = [...new Set(questions.map((q) => q.subject))];
+    const subjectMap = new Map();
 
-      const subjectMap = new Map();
-      for (const name of subjects) {
-        const subject = await tx.subject.upsert({
-          where: { name },
-          update: {},
-          create: { name },
-        });
-        subjectMap.set(name, subject.subjectId);
-      }
+    for (const name of subjects) {
+      const subject = await prisma.subject.upsert({
+        where: { name },
+        update: {},
+        create: { name },
+      });
+      subjectMap.set(name, subject.subjectId);
+    }
 
-      const createdQuestions = await Promise.all(
-        questions.map((q) =>
-          tx.question.create({
+    // Helper to process in batches
+    const batchSize = 5;
+    let totalInserted = 0;
+
+    for (let i = 0; i < questions.length; i += batchSize) {
+      const batch = questions.slice(i, i + batchSize);
+
+      await Promise.all(
+        batch.map((q) =>
+          prisma.question.create({
             data: {
               week: parseInt(q.week, 10),
               questionText: q.questionText,
@@ -65,24 +68,19 @@ export async function POST(request) {
         )
       );
 
-      return { count: createdQuestions.length };
-    });
+      totalInserted += batch.length;
+    }
 
     return new Response(
       JSON.stringify({
-        message: `Upload successful! Processed ${result.count} questions`,
+        message: `Upload successful! Processed ${totalInserted} questions`,
       }),
-      {
-        status: 201,
-        headers: { "Content-Type": "application/json" },
-      }
+      { status: 201, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
     console.error("Upload error:", error);
     return new Response(
-      JSON.stringify({
-        message: error.message || "Internal server error",
-      }),
+      JSON.stringify({ message: error.message || "Internal server error" }),
       {
         status: 500,
         headers: { "Content-Type": "application/json" },

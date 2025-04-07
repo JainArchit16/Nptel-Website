@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/components/AuthProvider";
 import { motion } from "framer-motion";
+import Head from "next/head";
 // import { SessionProvider } from "next-auth/react";
 
 const geistSans = Geist({
@@ -19,6 +20,9 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Home",
   description: "One stop solution for nptel exams",
+  icons: {
+    icon: "/mainLogo.jpg",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -26,9 +30,9 @@ export default function RootLayout({ children }) {
     <>
       <AuthProvider>
         <html lang="en" className="h-full">
-          <head>
-            <link rel="icon" href="/assests/mainLogo.jpg" />
-          </head>
+          <Head>
+            <link rel="icon" href="/mainLogo.jpg" />
+          </Head>
           <body className="h-full w-full">
             <motion
               initial={{ opacity: 0 }}
@@ -40,6 +44,7 @@ export default function RootLayout({ children }) {
               <Navbar />
               {children}
             </motion>
+            <div id="modal-root"></div>
           </body>
         </html>
       </AuthProvider>
