@@ -2,7 +2,14 @@ import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(request) {
-  const session = await getToken({ req: request });
+  const session = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+    cookieName:
+      process.env.NODE_ENV === "production"
+        ? "__Secure-next-auth.session-token"
+        : "next-auth.session-token",
+  });
 
   const loginPath = "/login";
   const signupPath = "/signup";
