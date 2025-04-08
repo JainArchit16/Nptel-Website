@@ -16,7 +16,7 @@ const Navbar = () => {
   const navigation = [
     { path: "/", name: "Home" },
     { path: "/quiz", name: "Quiz" },
-    { path: "/dashboard/uploadPdf", name: "Questions" },
+    // { path: "/dashboard/uploadPdf", name: "Questions" },
     { path: "/mocktest", name: "Mock Test" },
   ];
 

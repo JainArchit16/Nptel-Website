@@ -23,7 +23,7 @@ export async function middleware(request) {
 
   if (session) {
     if (pathname === pdfPath && session.email !== "abc@gmail.com") {
-      return NextResponse.redirect(new URL("/dashboard/profile", request.url));
+      return NextResponse.redirect(new URL("/", request.url));
     }
     if (pathname === loginPath || pathname === signupPath) {
       return NextResponse.redirect(new URL("/dashboard/profile", request.url));
