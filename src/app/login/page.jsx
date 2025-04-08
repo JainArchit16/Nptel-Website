@@ -31,7 +31,7 @@ export default function LoginPage() {
       toast.dismiss(toastId);
       if (response.ok) {
         toast.success("Welcome back!");
-        router.push("/");
+        window.location.href = "/";
       }
       if (response.status == 401) {
         toast.error("Invalid email or password");
