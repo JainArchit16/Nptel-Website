@@ -13,12 +13,16 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
-  const navigation = [
+  const baseNavigation = [
     { path: "/", name: "Home" },
     { path: "/quiz", name: "Quiz" },
-    // { path: "/dashboard/uploadPdf", name: "Questions" },
     { path: "/mocktest", name: "Mock Test" },
   ];
+
+  const navigation =
+    session?.user?.email === "abc@gmail.com"
+      ? [...baseNavigation, { path: "/dashboard/uploadPdf", name: "Upload Questions" }]
+      : baseNavigation;
 
   const loggedIn = session?.user;
 
