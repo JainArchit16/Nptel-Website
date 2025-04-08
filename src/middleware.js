@@ -21,24 +21,24 @@ export async function middleware(request) {
 
   const pathname = request.nextUrl.pathname;
 
-  // if (session) {
-  //   if (pathname === pdfPath && session.email !== "abc@gmail.com") {
-  //     return NextResponse.redirect(new URL("/", request.url));
-  //   }
-  //   if (pathname === loginPath || pathname === signupPath) {
-  //     return NextResponse.redirect(new URL("/dashboard/profile", request.url));
-  //   }
-  // } else {
-  //   // If not authenticated, restrict access to dashboard and quiz
-  //   if (
-  //     pathname.startsWith(dashboardPrefix) ||
-  //     pathname === quizPath ||
-  //     pathname === mockPath ||
-  //     pathname === bookPath
-  //   ) {
-  //     return NextResponse.redirect(new URL(loginPath, request.url));
-  //   }
-  // }
+  if (session) {
+    if (pathname === pdfPath && session.email !== "abc@gmail.com") {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+    if (pathname === loginPath || pathname === signupPath) {
+      return NextResponse.redirect(new URL("/dashboard/profile", request.url));
+    }
+  } else {
+    // If not authenticated, restrict access to dashboard and quiz
+    if (
+      pathname.startsWith(dashboardPrefix) ||
+      pathname === quizPath ||
+      pathname === mockPath ||
+      pathname === bookPath
+    ) {
+      return NextResponse.redirect(new URL(loginPath, request.url));
+    }
+  }
 
   return NextResponse.next();
 }
