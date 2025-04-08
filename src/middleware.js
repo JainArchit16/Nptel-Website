@@ -14,6 +14,7 @@ export async function middleware(request) {
   const loginPath = "/login";
   const signupPath = "/signup";
   const dashboardPrefix = "/dashboard";
+  const pdfPath = "/dashboard/uploadPdf";
   const quizPath = "/quiz";
   const mockPath = "/mocktest";
   const bookPath = "/bookmark";
@@ -21,7 +22,9 @@ export async function middleware(request) {
   const pathname = request.nextUrl.pathname;
 
   if (session) {
-    // If authenticated, redirect away from login or signup
+    if (pathname === pdfPath && session.email !== "abc@gmail.com") {
+      return NextResponse.redirect(new URL("/dashboard/profile", request.url));
+    }
     if (pathname === loginPath || pathname === signupPath) {
       return NextResponse.redirect(new URL("/dashboard/profile", request.url));
     }
