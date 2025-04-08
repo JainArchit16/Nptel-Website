@@ -2,11 +2,11 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import Spinner from "../../../components/Spinner";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { FiEdit, FiSave } from "react-icons/fi";
+import { useSession, signIn, signOut, getSession } from "next-auth/react";
 
 const ProfilePage = () => {
   const { data: session } = useSession();
@@ -64,7 +64,9 @@ const ProfilePage = () => {
       if (res.status === 200) {
         toast.success("Saved");
         setIsEditing(false);
-        // Optionally, you can update the session or refetch user data here
+        const updatedSession = await getSession();
+        setGender(updatedSession.user.gender);
+        setCollege(updatedSession.user.college);
       }
     } catch (error) {
       toast.dismiss(id);

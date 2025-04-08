@@ -52,6 +52,8 @@ export const authOptions = {
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
+        token.gender = user.gender;
+        token.college = user.college;
       }
       return token;
     },
@@ -61,6 +63,8 @@ export const authOptions = {
           id: token.id,
           name: token.name,
           email: token.email,
+          gender: token.gender,
+          college: token.college,
         };
       }
       return session;
