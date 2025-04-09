@@ -46,6 +46,27 @@ const ProfilePage = () => {
     }
   }, [session]);
 
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const res = await fetch("/api/user/me", { credentials: "include" });
+        if (res.status === 200) {
+          const data = await res.json();
+          setGender(data.gender);
+          setCollege(data.college);
+        } else {
+          console.error("Failed to fetch profile:", res.status);
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+
+    if (session?.user?.id) {
+      fetchUserProfile();
+    }
+  }, [session]);
+
   const handleSave = async () => {
     const id = toast.loading("Saving");
     try {
@@ -64,9 +85,15 @@ const ProfilePage = () => {
       if (res.status === 200) {
         toast.success("Saved");
         setIsEditing(false);
-        const updatedSession = await getSession();
-        setGender(updatedSession.user.gender);
-        setCollege(updatedSession.user.college);
+
+        const updatedUserRes = await fetch("/api/user/me");
+        if (updatedUserRes.ok) {
+          const updatedUser = await updatedUserRes.json();
+          setGender(updatedUser.gender);
+          setCollege(updatedUser.college);
+        } else {
+          toast.error("Failed to fetch updated user");
+        }
       }
     } catch (error) {
       toast.dismiss(id);

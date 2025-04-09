@@ -299,11 +299,11 @@ export default function LoginPage() {
               Create Account
             </Link>
 
-            <div className="absolute bottom-8 left-0 right-0 flex justify-center space-x-2">
+            {/* <div className="absolute bottom-8 left-0 right-0 flex justify-center space-x-2">
               <span className="w-2 h-2 rounded-full bg-white/30"></span>
               <span className="w-2 h-2 rounded-full bg-white"></span>
               <span className="w-2 h-2 rounded-full bg-white/30"></span>
-            </div>
+            </div> */}
           </div>
         </div>
 

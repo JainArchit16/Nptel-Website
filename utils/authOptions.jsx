@@ -35,7 +35,6 @@ export const authOptions = {
               email: user.email,
               gender: user.gender,
               college: user.college,
-              // role: user.role,
             };
           }
           return null;
