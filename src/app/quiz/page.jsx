@@ -543,7 +543,7 @@ export default function QuizFlow() {
                               Question {currentQuestionIndex + 1}
                             </Badge>
                           </div>
-                          <h3 className="text-xl font-medium text-white">
+                          <h3 className="text-xl font-medium text-white whitespace-pre-line">
                             {questions[
                               currentQuestionIndex
                             ]?.questionText.substring(12)}
