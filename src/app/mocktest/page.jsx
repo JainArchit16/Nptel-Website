@@ -381,7 +381,7 @@ export default function MockTest() {
                 </motion.div>
 
                 <motion.div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-                  {[5, 10, 15].map((mins, index) => (
+                  {[30, 60, 90].map((mins, index) => (
                     <motion.div
                       key={mins}
                       variants={itemVariants}
