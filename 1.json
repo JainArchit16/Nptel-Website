@@ -1,0 +1,217 @@
+[
+  {
+    "week": 11,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 1: A two-way ANOVA is also known as",
+    "options": [
+      "a. Experiment design",
+      "b. Design of experiment",
+      "c. Factorial design",
+      "d. MANOVA"
+    ],
+    "correctOption": 2
+  },
+  {
+    "week": 11,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 2: What is the primary purpose of using a factorial design in experiments?",
+    "options": [
+      "a. To test one factor at a time",
+      "b. To identify the effect of multiple factors and their interactions",
+      "c. To increase the number of experiments",
+      "d. To avoid randomization"
+    ],
+    "correctOption": 1
+  },
+  {
+    "week": 11,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 3: How many treatment combinations are there in 2^4 factorial design?",
+    "options": ["a. 4", "b. 8", "c. 16", "d. 32"],
+    "correctOption": 2
+  },
+  {
+    "week": 11,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 4: In a 2^3 factorial design, what does the AB interaction effect represent?",
+    "options": [
+      "a. The effect of A alone",
+      "b. The effect of B alone",
+      "c. The combined effect of A and B beyond their individual effects",
+      "d. The overall average response"
+    ],
+    "correctOption": 2
+  },
+  {
+    "week": 11,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 5: What is the advantage of a fractional factor design over a full factorial design?",
+    "options": [
+      "a. It tests all interactions equally",
+      "b. It requires fewer experimental runs",
+      "c. It eliminates the main effects",
+      "d. It ensures no aliasing occurs"
+    ],
+    "correctOption": 1
+  },
+  {
+    "week": 11,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 6: Chi-square goodness-of-fit and the chi-square test of independence are an outgrowth of distribution",
+    "options": ["a. Normal", "b. Poisson", "c. Binomial", "d. Hypergeometric"],
+    "correctOption": 2
+  },
+  {
+    "week": 11,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 7: The Chi-square Goodness of Fit test is used to",
+    "options": [
+      "a. Test the independence of two categorical variables",
+      "b. Compare sample means across multiple groups",
+      "c. Determine whether observed frequencies match expected frequencies",
+      "d. Test for linear relationships between variables"
+    ],
+    "correctOption": 2
+  },
+  {
+    "week": 11,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 8: What is the formula for calculating the degree of freedom in a Chi-Square Goodness of Fit test?",
+    "options": [
+      "a. n-1",
+      "b. k-1 where k is the number of categories",
+      "c. (n-1)(k-1)",
+      "d. n(k-1)"
+    ],
+    "correctOption": 1
+  },
+  {
+    "week": 11,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 9: In a Chi-Square Goodness of Fit test, which condition must be satisfied for the expected frequencies?",
+    "options": [
+      "a. All expected frequencies must be equal",
+      "b. All expected frequencies must be greater than or equal to 5",
+      "c. All expected frequencies must be less than observed frequencies",
+      "d. All expected frequencies must sum to zero"
+    ],
+    "correctOption": 1
+  },
+  {
+    "week": 11,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 10: If the computed χ² statistic is larger than the critical value from the Chi-Square table, we:",
+    "options": [
+      "a. Fail to reject the null hypothesis",
+      "b. Reject the null hypothesis",
+      "c. Increase the sample size",
+      "d. Decrease the significance level"
+    ],
+    "correctOption": 1
+  },
+  {
+    "week": 12,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 1: The difference between correlation and regression is",
+    "options": [
+      "a. Correlation is concerned with the strength of the relationship, while regression is concerned with the causal effect",
+      "b. Correlation is concerned with causal effect, while regression is concerned with the strength of the relationship",
+      "c. Both correlations and regression are concerned with strength of the relationship",
+      "d. Both correlations and regression are concerned with causal effects in a relationship"
+    ],
+    "correctOption": 0
+  },
+  {
+    "week": 12,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 2: In a simple regression model, the slope of the regression line is -0.5. What does this imply about the relationship between X and Y?",
+    "options": [
+      "a. Y increases by 0.5 for every unit increase in X",
+      "b. Y decreases by 0.5 for every unit increase in X",
+      "c. X decreases by 0.5 for every unit increase in Y",
+      "d. X increases by 0.5 for every unit increase in Y"
+    ],
+    "correctOption": 1
+  },
+  {
+    "week": 12,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 3: If the correlation coefficient r between X and Y is 0.8, what is the coefficient of determination?",
+    "options": ["a. 0.64", "b. 0.8", "c. 0.16", "d. 1.6"],
+    "correctOption": 0
+  },
+  {
+    "week": 12,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 4: Given the regression equation Y = a + bX where b=3 and the mean values of X and Y are 4 and 14, respectively. Find the intercept a",
+    "options": ["a. 2", "b. 8", "c. -2", "d. 6"],
+    "correctOption": 0
+  },
+  {
+    "week": 12,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 5: Which one of the following is not the assumption of regression?",
+    "options": [
+      "a. Linearity",
+      "b. Independence of Error",
+      "c. Normality of Error",
+      "d. Unequal Variance"
+    ],
+    "correctOption": 3
+  },
+  {
+    "week": 12,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 6: Which of the following best describes the linearity assumption in regression analysis?",
+    "options": [
+      "a. The dependent variable is normally distributed",
+      "b. The relationship between independent and dependent variables is linear",
+      "c. All residuals are uncorrelated",
+      "d. The independent variables are linearly correlated with each other"
+    ],
+    "correctOption": 1
+  },
+  {
+    "week": 12,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 7: What does the assumption of homoscedasticity imply in regression?",
+    "options": [
+      "a. The residuals are normally distributed",
+      "b. The variance of residuals is constant across all levels of the independent variable",
+      "c. The predictors are independent of each other",
+      "d. The dependent variable is constant across observations"
+    ],
+    "correctOption": 1
+  },
+  {
+    "week": 12,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 8: Which assumption is violated when two or more independent variables in a regression model are highly correlated?",
+    "options": [
+      "a. Normality of residuals",
+      "b. Linearity",
+      "c. Independence of errors",
+      "d. No multicollinearity"
+    ],
+    "correctOption": 3
+  },
+  {
+    "week": 12,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 9: Why is the normality of residuals important in regression?",
+    "options": [
+      "a. To ensure the coefficients are unbiased",
+      "b. To validate confidence interval and hypothesis tests",
+      "c. To ensure the independent variables are linearly related",
+      "d. To confirm that the dependent variable is normal"
+    ],
+    "correctOption": 1
+  },
+  {
+    "week": 12,
+    "subject": "Business Statistics",
+    "questionText": "QUESTION 10: The regression equation is given as Y = 3 + 2X. If X=4, what is the predicted value of Y?",
+    "options": ["a. 8", "b. 10", "c. 11", "d. 12"],
+    "correctOption": 2
+  }
+]
