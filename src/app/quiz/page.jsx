@@ -91,12 +91,24 @@ export default function QuizFlow() {
       .catch(console.error);
   }, []);
 
-  // Fetch questions when week selected
   useEffect(() => {
     if (selectedSubject && selectedWeek) {
       fetch(`/api/subjects/${selectedSubject}/weeks/${selectedWeek}`)
         .then((res) => res.json())
-        .then((data) => Array.isArray(data) && setQuestions(data))
+        .then((data) => {
+          if (Array.isArray(data)) {
+            const getQuestionNumber = (text) => {
+              const match = text.match(/\bQUESTION\s*(\d+)/i);
+              return match ? parseInt(match[1], 10) : Infinity;
+            };
+            data.sort(
+              (a, b) =>
+                getQuestionNumber(a.questionText) -
+                getQuestionNumber(b.questionText)
+            );
+            setQuestions(data);
+          }
+        })
         .catch(console.error);
     }
   }, [selectedSubject, selectedWeek]);
