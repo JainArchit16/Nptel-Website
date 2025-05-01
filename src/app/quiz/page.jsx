@@ -974,7 +974,7 @@ export default function QuizFlow() {
         {/* Footer */}
         <footer className="p-6 backdrop-blur-lg border-t border-white/10 mt-auto">
           <div className="max-w-7xl mx-auto text-center text-sm text-white/40">
-            © 2025 NPTEL Hub. All rights reserved.
+            © 2025 NPTEL Hub. Developed by Daksh Baweja and Archit Jain.
           </div>
         </footer>
       </div>

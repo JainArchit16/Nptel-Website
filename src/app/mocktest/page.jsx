@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Clock,
   CheckCircle,
@@ -39,6 +40,7 @@ export default function MockTest() {
   const [step, setStep] = useState(1);
   const [quizResults, setQuizResults] = useState(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [activeResultsTab, setActiveResultsTab] = useState("all");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   // Animation variants for transitions
@@ -46,6 +48,21 @@ export default function MockTest() {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
     exit: { opacity: 0, y: -20, transition: { duration: 0.3 } },
+  };
+
+  const getFilteredQuestions = () => {
+    if (activeResultsTab === "all") return questions;
+    if (activeResultsTab === "correct")
+      return questions.filter(
+        (q) =>
+          quizResults?.correctAnswers[q.questionId] === answers[q.questionId]
+      );
+    if (activeResultsTab === "incorrect")
+      return questions.filter(
+        (q) =>
+          quizResults?.correctAnswers[q.questionId] !== answers[q.questionId]
+      );
+    return questions;
   };
 
   const itemVariants = {
@@ -618,7 +635,7 @@ export default function MockTest() {
                 </div>
 
                 {/* Results List */}
-                <div className="space-y-4">
+                {/* <div className="space-y-4">
                   {questions.map((question, index) => {
                     const isCorrect =
                       answers[question.questionId] ===
@@ -670,7 +687,111 @@ export default function MockTest() {
                       </motion.div>
                     );
                   })}
-                </div>
+                </div> */}
+                {/* Results Tabs */}
+                <Tabs defaultValue="incorrect">
+                  <TabsList className="grid grid-cols-2 w-full mb-6 bg-white/5 backdrop-blur-md border border-white/10">
+                    <TabsTrigger
+                      value="correct"
+                      className="w-full data-[state=active]:bg-green-600"
+                    >
+                      Correct
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="incorrect"
+                      className="w-full data-[state=active]:bg-rose-600"
+                    >
+                      Incorrect
+                    </TabsTrigger>
+                  </TabsList>
+
+                  {/* Incorrect Answers Tab (includes Unanswered) */}
+                  <TabsContent value="incorrect" className="mt-0">
+                    <div className="space-y-4">
+                      {questions
+                        .filter((q) => {
+                          const userAnswer = answers[q.questionId];
+                          return (
+                            !userAnswer ||
+                            userAnswer !== q.options[q.correctOption]
+                          );
+                        })
+                        .map((question, index) => (
+                          <motion.div
+                            key={question.questionId}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.05 }}
+                            className="p-5 rounded-xl border bg-rose-900/20 border-rose-700/50"
+                          >
+                            <div className="flex items-start gap-4">
+                              <div className="flex-shrink-0 mt-1 text-rose-400">
+                                <XCircle size={24} />
+                              </div>
+                              <div className="flex-grow">
+                                <h3 className="text-lg font-medium text-white">
+                                  {question.questionText.slice(12)}
+                                </h3>
+                                <div className="mt-3 space-y-2">
+                                  <p className="text-sm text-rose-400">
+                                    {answers[question.questionId]
+                                      ? `Your answer: ${
+                                          answers[question.questionId]
+                                        }`
+                                      : "Not answered"}
+                                  </p>
+                                  <p className="text-sm text-blue-400">
+                                    Correct answer:{" "}
+                                    {question.options[question.correctOption]}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))}
+                    </div>
+                  </TabsContent>
+
+                  {/* Correct Answers Tab */}
+                  <TabsContent value="correct" className="mt-0">
+                    <div className="space-y-4">
+                      {questions
+                        .filter(
+                          (q) =>
+                            answers[q.questionId] === q.options[q.correctOption]
+                        )
+                        .map((question, index) => (
+                          <motion.div
+                            key={question.questionId}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.05 }}
+                            className="p-5 rounded-xl border bg-green-900/20 border-green-700/50"
+                          >
+                            <div className="flex items-start gap-4">
+                              <div className="flex-shrink-0 mt-1 text-green-400">
+                                <CheckCircle size={24} />
+                              </div>
+                              <div className="flex-grow">
+                                <h3 className="text-lg font-medium text-white">
+                                  {question.questionText.slice(12)}
+                                </h3>
+                                <div className="mt-3 space-y-2">
+                                  <p className="text-sm text-green-400">
+                                    Your answer: {answers[question.questionId]}
+                                  </p>
+                                  <p className="text-sm text-blue-400">
+                                    Correct answer:{" "}
+                                    {question.options[question.correctOption]}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))}
+                    </div>
+                  </TabsContent>
+                </Tabs>
 
                 {/* Navigation Options */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
@@ -729,7 +850,7 @@ export default function MockTest() {
         {/* Footer */}
         <footer className="p-6 backdrop-blur-lg border-t border-white/10 mt-auto">
           <div className="max-w-7xl mx-auto text-center text-sm text-white/40">
-            © 2025 NPTEL Hub. All rights reserved.
+            © 2025 NPTEL Hub. Developed by Daksh Baweja and Archit Jain
           </div>
         </footer>
       </div>
