@@ -2,7 +2,7 @@ import { FiActivity } from "react-icons/fi";
 
 const RecentActivity = ({ quizzes }) => {
   // Get the last 3 quizzes
-  const recentQuizzes = quizzes.slice(0, 3);
+  const recentQuizzes = quizzes.slice(-3);
 
   return (
     <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 h-full">
