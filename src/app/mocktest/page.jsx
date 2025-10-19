@@ -14,6 +14,8 @@ import {
   ArrowLeft,
   Home,
   Sparkles,
+  Bookmark,
+  BookmarkCheck,
 } from "lucide-react";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
@@ -42,6 +44,63 @@ export default function MockTest() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [activeResultsTab, setActiveResultsTab] = useState("all");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
+  // Bookmark state
+  const [bookmarked, setBookmarked] = useState({});
+
+  // Fetch bookmarks for this user
+  useEffect(() => {
+    if (userId) {
+      fetch(`/api/bookmarks?userId=${userId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          const bookmarkMap = Array.isArray(data)
+            ? data.reduce((acc, b) => {
+                acc[b.questionId] = true;
+                return acc;
+              }, {})
+            : {};
+          setBookmarked(bookmarkMap);
+        })
+        .catch(console.error);
+    }
+  }, [userId]);
+
+  // Handle bookmark toggle (POST / DELETE)
+  const handleBookmark = async (questionId) => {
+    const isBookmarked = bookmarked[questionId];
+
+    try {
+      if (isBookmarked) {
+        const res = await fetch("/api/bookmark", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId, questionId }),
+        });
+        if (res.ok) {
+          setBookmarked((prev) => ({ ...prev, [questionId]: false }));
+          toast.success("Bookmark removed");
+        } else {
+          throw new Error("Failed to remove bookmark");
+        }
+      } else {
+        const res = await fetch("/api/bookmark", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId, questionId }),
+        });
+        if (res.ok) {
+          setBookmarked((prev) => ({ ...prev, [questionId]: true }));
+          toast.success("Bookmark added");
+        } else {
+          throw new Error("Failed to add bookmark");
+        }
+      }
+    } catch (error) {
+      console.error("Bookmark operation failed:", error);
+      toast.error("Failed to update bookmark");
+    }
+  };
 
   // Animation variants for transitions
   const pageVariants = {
@@ -520,6 +579,28 @@ export default function MockTest() {
                             ]?.questionText.slice(12)}
                           </h3>
                         </div>
+
+                        {/* Bookmark button for current question */}
+                        <div className="ml-4">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() =>
+                              handleBookmark(
+                                questions[currentQuestionIndex]?.questionId
+                              )
+                            }
+                            className="text-white/60 hover:text-amber-400"
+                          >
+                            {bookmarked[
+                              questions[currentQuestionIndex]?.questionId
+                            ] ? (
+                              <BookmarkCheck className="w-5 h-5" />
+                            ) : (
+                              <Bookmark className="w-5 h-5" />
+                            )}
+                          </Button>
+                        </div>
                       </div>
 
                       <RadioGroup
@@ -634,60 +715,6 @@ export default function MockTest() {
                   </p>
                 </div>
 
-                {/* Results List */}
-                {/* <div className="space-y-4">
-                  {questions.map((question, index) => {
-                    const isCorrect =
-                      answers[question.questionId] ===
-                      question.options[question.correctOption];
-                    return (
-                      <motion.div
-                        key={question.questionId}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                        className={`p-5 rounded-xl border ${
-                          isCorrect
-                            ? "bg-green-900/20 border-green-700/50"
-                            : "bg-rose-900/20 border-rose-700/50"
-                        }`}
-                      >
-                        <div className="flex items-start gap-4">
-                          <div
-                            className={`flex-shrink-0 mt-1 ${
-                              isCorrect ? "text-green-400" : "text-rose-400"
-                            }`}
-                          >
-                            {isCorrect ? (
-                              <CheckCircle size={24} />
-                            ) : (
-                              <XCircle size={24} />
-                            )}
-                          </div>
-                          <div className="flex-grow">
-                            <h3 className="text-lg font-medium text-white">
-                              {question.questionText.slice(12)}
-                            </h3>
-                            <div className="mt-3 space-y-2">
-                              <p
-                                className={`text-sm ${
-                                  isCorrect ? "text-green-400" : "text-rose-400"
-                                }`}
-                              >
-                                Your answer:{" "}
-                                {answers[question.questionId] || "Not answered"}
-                              </p>
-                              <p className="text-sm text-blue-400">
-                                Correct answer:{" "}
-                                {question.options[question.correctOption]}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div> */}
                 {/* Results Tabs */}
                 <Tabs defaultValue="incorrect">
                   <TabsList className="grid grid-cols-2 w-full mb-6 bg-white/5 backdrop-blur-md border border-white/10">
@@ -729,9 +756,25 @@ export default function MockTest() {
                                 <XCircle size={24} />
                               </div>
                               <div className="flex-grow">
-                                <h3 className="text-lg font-medium text-white">
-                                  {question.questionText.slice(12)}
-                                </h3>
+                                <div className="flex items-center justify-between">
+                                  <h3 className="text-lg font-medium text-white">
+                                    {question.questionText.slice(12)}
+                                  </h3>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() =>
+                                      handleBookmark(question.questionId)
+                                    }
+                                    className="text-white/60 hover:text-amber-400 ml-2"
+                                  >
+                                    {bookmarked[question.questionId] ? (
+                                      <BookmarkCheck className="w-5 h-5 text-amber-400" />
+                                    ) : (
+                                      <Bookmark className="w-5 h-5" />
+                                    )}
+                                  </Button>
+                                </div>
                                 <div className="mt-3 space-y-2">
                                   <p className="text-sm text-rose-400">
                                     {answers[question.questionId]
@@ -773,9 +816,25 @@ export default function MockTest() {
                                 <CheckCircle size={24} />
                               </div>
                               <div className="flex-grow">
-                                <h3 className="text-lg font-medium text-white">
-                                  {question.questionText.slice(12)}
-                                </h3>
+                                <div className="flex items-center justify-between">
+                                  <h3 className="text-lg font-medium text-white">
+                                    {question.questionText.slice(12)}
+                                  </h3>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() =>
+                                      handleBookmark(question.questionId)
+                                    }
+                                    className="text-white/60 hover:text-amber-400 ml-2"
+                                  >
+                                    {bookmarked[question.questionId] ? (
+                                      <BookmarkCheck className="w-5 h-5 text-amber-400" />
+                                    ) : (
+                                      <Bookmark className="w-5 h-5" />
+                                    )}
+                                  </Button>
+                                </div>
                                 <div className="mt-3 space-y-2">
                                   <p className="text-sm text-green-400">
                                     Your answer: {answers[question.questionId]}

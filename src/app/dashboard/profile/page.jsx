@@ -163,21 +163,100 @@ const DashboardPage = () => {
             </motion.div>
           </div>
 
-          {/* Full Width Components at the bottom */}
-          <motion.div variants={itemVariants} className="lg:col-span-3">
-            {isLoading ? (
-              <SkeletonLoader className="h-[400px]" />
+          <div className="p-8">
+            {loading ? (
+              <div className="flex justify-center py-12">
+                <Spinner loading={loading} />
+              </div>
+            ) : quizzes.length === 0 ? (
+              <div className="text-center py-12 text-gray-500">
+                <p className="text-lg">
+                  No quiz attempts yet. Let's get started!
+                </p>
+                <Link
+                  href="/quiz"
+                  className="mt-4 inline-block text-blue-600 hover:text-blue-700"
+                >
+                  Take a Quiz →
+                </Link>
+              </div>
             ) : (
-              <SubjectMasteryChart data={subjectData || []} />
+              <div className="overflow-x-auto rounded-xl border border-gray-100">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      {[
+                        "Subject",
+                        "Week",
+                        "Score",
+                        "Accuracy",
+                        "Attempted On",
+                      ].map((header) => (
+                        <th
+                          key={header}
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          {header}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {quizzes.map((quiz) => (
+                      <tr
+                        key={quiz.quizId}
+                        className="hover:bg-gray-50 transition-colors"
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {quiz.subject?.name || "N/A"}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                          {quiz.week === 0 ? "Mock Test" : `Week ${quiz.week}`}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            {quiz.score}/
+                            {Math.round(
+                              (quiz.score * 100) / (quiz.accuracy || 1)
+                            )}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                          <div className="flex items-center">
+                            <div className="w-16 h-2 bg-gray-200 rounded-full overflow-hidden mr-2">
+                              <div
+                                className="h-full bg-blue-600 transition-all duration-500"
+                                style={{ width: `${quiz.accuracy}%` }}
+                              />
+                            </div>
+                            <span>{quiz.accuracy}%</span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                          {quiz.attemptTime
+                            ? new Date(quiz.attemptTime).toLocaleString(
+                                "en-IN",
+                                {
+                                  timeZone: "Asia/Kolkata",
+                                  weekday: "short",
+                                  day: "numeric",
+                                  month: "short",
+                                  year: "numeric",
+                                  hour: "numeric",
+                                  minute: "numeric",
+                                  second: "numeric",
+                                  hour12: true,
+                                }
+                              )
+                            : "N/A"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
-          </motion.div>
-          <motion.div variants={itemVariants} className="lg:col-span-3">
-            {isLoading ? (
-              <SkeletonLoader className="h-[300px]" />
-            ) : (
-              <EnhancedQuizTable quizzes={quizzes || []} />
-            )}
-          </motion.div>
+          </div>
         </motion.div>
       </div>
     </div>

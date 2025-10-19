@@ -65,7 +65,7 @@ export async function POST(req) {
         userId,
         subjectId,
         week, // for mock test, this will be 0
-        score: scorePercentage,
+        score: correctCount,
         accuracy: scorePercentage, // optional: could change later
         userAnswers: {
           createMany: {
