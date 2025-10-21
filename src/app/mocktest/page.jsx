@@ -200,6 +200,14 @@ export default function MockTest() {
       ...prev,
       [questionId]: selectedOption,
     }));
+
+    // If auto-next is enabled, move to the next question
+    if (autoNextEnabled && currentQuestionIndex < questions.length - 1) {
+      // Use a small delay so the user can see their selection
+      setTimeout(() => {
+        navigateToQuestion(currentQuestionIndex + 1);
+      }, 300);
+    }
   };
 
   // Submit the quiz via our API which stores the quiz record and its user answers.
@@ -260,6 +268,7 @@ export default function MockTest() {
       setCurrentQuestionIndex(index);
     }
   };
+  const [autoNextEnabled, setAutoNextEnabled] = useState(false);
 
   const getProgressPercentage = () => {
     if (!questions.length) return 0;
@@ -517,6 +526,22 @@ export default function MockTest() {
                     </h1>
                   </div>
                   <div className="flex items-center gap-3">
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        id="auto-next"
+                        checked={autoNextEnabled}
+                        onChange={(e) => setAutoNextEnabled(e.target.checked)}
+                        className="w-4 h-4 rounded text-blue-500 focus:ring-blue-500 bg-white/10 border-white/20 cursor-pointer"
+                      />
+                      <Label
+                        htmlFor="auto-next"
+                        className="text-sm text-white/80 cursor-pointer"
+                      >
+                        Auto-Next
+                      </Label>
+                    </div>
+                    <div className="h-6 w-px bg-white/10 hidden md:block" />
                     <div className="text-sm text-white/70">
                       Question {currentQuestionIndex + 1} of {questions.length}
                     </div>
